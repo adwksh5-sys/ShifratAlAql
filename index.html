@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شفرة العقل 🧠</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;background:#090d1b;color:white;
+font-family:Arial,sans-serif;text-align:center;
+min-height:100vh;padding:25px 15px;
+}
+.container{max-width:480px;margin:auto}
+h1{color:#bd83ff;font-size:34px}
+.sub{color:#9da8c5}
+.card{
+background:#151c32;border:1px solid #303b60;
+border-radius:22px;padding:25px;margin-top:22px;
+box-shadow:0 10px 35px #0006
+}
+.stats{display:flex;justify-content:space-around;
+color:#bda0ff;font-weight:bold}
+#question{font-size:24px;margin:30px 0;line-height:1.7}
+input{
+width:100%;padding:16px;border-radius:12px;
+border:1px solid #59658a;background:#0c1326;
+color:white;font-size:20px;text-align:center;
+}
+button{
+border:0;border-radius:12px;padding:14px;
+font-size:17px;font-weight:bold;cursor:pointer;
+margin:7px;background:#9660ed;color:white;
+}
+button:active{transform:scale(.96)}
+.secondary{background:#273453}
+#message{min-height:30px;margin:15px;color:#ffd47a}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🧠 شفرة العقل</h1>
+<p class="sub">اختبر ذكاءك... هل تستطيع الوصول إلى النهاية؟</p>
+
+<div class="card">
+<div class="stats">
+<span>🏆 النقاط: <b id="score">0</b></span>
+<span>🔥 المستوى: <b id="level">1</b></span>
+</div>
+
+<div id="question">استعد للتحدي!</div>
+
+<input id="answer" placeholder="اكتب إجابتك هنا">
+
+<br><br>
+<button onclick="check()">تحقق من الإجابة</button>
+<button class="secondary" onclick="hint()">💡 تلميح</button>
+
+<div id="message"></div>
+</div>
+
+<p class="sub">♾️ تحديات متجددة بلا نهاية</p>
+</div>
+
+<script>
+let score=0,level=1,current,used=0;
+
+function generate(){
+let type=Math.floor(Math.random()*4);
+let a,b,answer,q,h;
+
+if(type===0){
+a=Math.floor(Math.random()*10)+level;
+b=Math.floor(Math.random()*10)+1;
+answer=a+b;
+q=`ما ناتج ${a} + ${b} ؟`;
+h="اجمع الرقمين معاً";
+}
+else if(type===1){
+a=Math.floor(Math.random()*10)+level;
+b=Math.floor(Math.random()*10)+1;
+answer=a-b;
+q=`ما ناتج ${a} - ${b} ؟`;
+h="اطرح الرقم الأصغر من الأكبر";
+}
+else if(type===2){
+a=Math.floor(Math.random()*9)+1;
+b=Math.floor(Math.random()*9)+1;
+answer=a*b;
+q=`ما ناتج ${a} × ${b} ؟`;
+h="فكر في جدول الضرب";
+}
+else{
+a=Math.floor(Math.random()*10)+1;
+answer=a*2+2;
+q=`إذا كان 2 + 2 = 4، فما ناتج ${a} + ${a} + 2 ؟`;
+answer=2*a+2;
+h="اجمع العدد مرتين ثم أضف 2";
+}
+
+current={answer,q,h};
+document.getElementById("question").textContent=q;
+document.getElementById("answer").value="";
+document.getElementById("message").textContent="";
+used=0;
+}
+
+function check(){
+let val=document.getElementById("answer").value.trim();
+if(val==="")return;
+if(Number(val)===current.answer){
+score+=10+level;
+level++;
+document.getElementById("message").textContent="🎉 إجابة صحيحة! أحسنت";
+}else{
+document.getElementById("message").textContent="❌ حاول مرة أخرى!";
+return;
+}
+update();
+setTimeout(generate,900);
+}
+
+function hint(){
+if(used)return;
+document.getElementById("message").textContent="💡 "+current.h;
+used=1;
+}
+
+function update(){
+document.getElementById("score").textContent=score;
+document.getElementById("level").textContent=level;
+}
+
+generate();
+</script>
+</body>
+</html>
