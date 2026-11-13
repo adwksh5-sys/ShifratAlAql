@@ -3,286 +3,412 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090d25">
-<title>شفرة العقل | مغامرة العقول</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#10152e">
+<title>شفرة العقل - المغامرة</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#090d25;color:white;font-family:Tahoma,Arial;
- min-height:100vh;overflow-x:hidden
+body{margin:0;background:#10152e;color:white;font-family:Tahoma;overflow:hidden;touch-action:none}
+#game{width:100%;height:100dvh;position:relative;overflow:hidden}
+canvas{width:100%;height:100%;display:block}
+.top{
+ position:absolute;top:10px;right:10px;left:10px;
+ display:flex;justify-content:space-between;align-items:center;
+ pointer-events:none
 }
-body:before{
- content:"";position:fixed;inset:0;pointer-events:none;
- background-image:radial-gradient(white 1px,transparent 1px);
- background-size:45px 45px;opacity:.25;
- animation:stars 20s linear infinite
+.pill{background:#111b3add;border:1px solid #6575ba;border-radius:15px;padding:9px 13px;font-size:13px}
+.controls{
+ position:absolute;bottom:20px;left:0;right:0;
+ display:flex;justify-content:space-between;padding:0 18px;
+ align-items:end;pointer-events:none
 }
-@keyframes stars{to{background-position:90px 90px}}
-button{font-family:inherit;cursor:pointer}
-#app{position:relative;z-index:1;max-width:700px;margin:auto;padding:18px}
-.screen{display:none;animation:appear .5s ease}
-.screen.active{display:block}
-@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.panel{
- background:linear-gradient(145deg,#202956ee,#111831ee);
- border:1px solid #5666a5;border-radius:25px;padding:22px;
- box-shadow:0 15px 45px #0008
+.group{display:flex;gap:12px;pointer-events:auto}
+.control{
+ width:62px;height:62px;border-radius:50%;border:2px solid #aab8ff;
+ background:#26366ddd;color:white;font-size:26px;
+ touch-action:none;box-shadow:0 4px 15px #0008
 }
-.logo{text-align:center;font-size:65px;animation:float 3s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-12px)}}
-h1{text-align:center;color:#c2caff;font-size:30px}
-h2{text-align:center}
-.sub{text-align:center;color:#c1c9ed;line-height:1.8}
-.btn{
- display:block;width:100%;border:0;border-radius:15px;padding:15px;
- margin-top:13px;font-size:17px;font-weight:bold;color:white;
- background:linear-gradient(100deg,#6864ff,#a34fff);
- box-shadow:0 5px 18px #655aff44
+.control:active{background:#7566e8}
+#jump{width:75px;height:75px;background:#704fd8}
+#message{
+ position:absolute;bottom:115px;left:10px;right:10px;
+ text-align:center;color:white;text-shadow:0 2px 5px black;
+ font-size:14px;pointer-events:none
 }
-.btn:active{transform:scale(.97)}
-.choice{
- display:block;width:100%;text-align:right;color:white;
- background:#29345f;border:1px solid #5364a0;
- border-radius:14px;padding:15px;margin:10px 0;font-size:16px;
- transition:.2s
+#intro,#puzzle,#ending{
+ position:absolute;inset:0;background:#080d20ed;
+ display:flex;align-items:center;justify-content:center;padding:20px;
 }
-.choice:hover{background:#414f91;transform:translateX(-4px)}
-.choice.good{background:#176c50;border-color:#5bffc0}
-.choice.bad{background:#87334c;border-color:#ff91a9}
-.characters{
- display:flex;justify-content:space-around;align-items:end;
- gap:8px;margin:25px 0 15px
+.box{
+ width:100%;max-width:440px;background:#202c53;
+ border:1px solid #8193d6;border-radius:24px;
+ padding:22px;text-align:center;box-shadow:0 10px 50px #0009
 }
-.character{text-align:center;flex:1;animation:float 3s ease-in-out infinite}
-.character:nth-child(2){animation-delay:.5s}
-.character:nth-child(3){animation-delay:1s}
-.avatar{font-size:65px;display:block;filter:drop-shadow(0 8px 10px #0008)}
-.character small{display:block;color:#c9d0ff;margin-top:8px}
-.scene{
- background:linear-gradient(180deg,#303c79,#172447);
- border:1px solid #7181c5;border-radius:20px;
- padding:20px;text-align:center;min-height:150px;
- position:relative;overflow:hidden
+h1{color:#c4caff;margin:8px}
+p{line-height:1.8;color:#e0e4ff}
+.action,.answer{
+ display:block;width:100%;border:0;border-radius:13px;
+ padding:14px;margin-top:11px;font-size:16px;font-weight:bold;
+ color:white;background:linear-gradient(100deg,#6564ee,#984de0)
 }
-.scene:after{
- content:"✦  ✧       ✦       ✧";
- position:absolute;top:15px;left:10px;color:#fff8;
- animation:glow 3s infinite alternate
-}
-@keyframes glow{to{opacity:.2;transform:translateY(20px)}}
-.dialog{
- background:#101831;border:1px solid #6473b6;border-radius:17px;
- padding:17px;margin:15px 0;line-height:1.9;color:#fff
-}
-.dialog strong{color:#b8c2ff}
-.stats{display:flex;justify-content:space-between;gap:8px;margin:12px 0}
-.stat{background:#101831;padding:10px;border-radius:12px;flex:1;text-align:center}
-.stat b{display:block;color:#c5caff;margin-top:5px}
-.progress{height:9px;background:#30385e;border-radius:20px;overflow:hidden;margin:15px 0}
-#progressFill{height:100%;width:0;background:#a18aff;transition:.4s}
-#question{font-size:20px;line-height:1.8;text-align:center;margin:20px 0}
-#feedback{text-align:center;line-height:1.8;min-height:45px;margin:12px 0}
-.tag{color:#bfc8ff;text-align:center;font-size:13px}
+.answer{background:#354575;border:1px solid #7284c5;text-align:center}
+.answer:active{background:#6654bb}
 .hidden{display:none!important}
-.footer{text-align:center;color:#8893c9;font-size:12px;margin:20px}
-#runner{display:inline-block;animation:run 1s infinite alternate}
-@keyframes run{from{transform:translateX(-12px) rotate(-5deg)}to{transform:translateX(12px) rotate(5deg)}}
+#resultText{font-size:17px}
 </style>
 </head>
 <body>
-<div id="app">
+<div id="game">
+<canvas id="world"></canvas>
 
-<!-- البداية -->
-<section id="home" class="screen active">
- <div class="panel">
-  <div class="logo">🧠</div>
-  <h1>شفرة العقل</h1>
-  <p class="sub">مغامرة العقول بدأت!<br>ادخل العالم الغامض واكتشف الأسرار.</p>
-  <div class="characters">
-   <div class="character"><span class="avatar">🕵️</span><small>آدم المحقق</small></div>
-   <div class="character"><span class="avatar">🤖</span><small>زيرو الروبوت</small></div>
-   <div class="character"><span class="avatar">🧙</span><small>لونا الساحرة</small></div>
-  </div>
-  <button class="btn" onclick="showScreen('world')">🚀 ابدأ المغامرة</button>
-  <p class="sub">ثلاث عوالم مختلفة تنتظرك!</p>
+<div class="top">
+ <div class="pill">🧠 شفرة العقل</div>
+ <div class="pill">⭐ <span id="score">0</span></div>
+ <div class="pill">🚪 <span id="level">1</span></div>
+</div>
+
+<div id="message">تحرك نحو الباب واكتشف السر!</div>
+
+<div class="controls">
+ <div class="group">
+  <button class="control" id="right">▶</button>
+  <button class="control" id="left">◀</button>
  </div>
-</section>
+ <button class="control" id="jump">⬆</button>
+</div>
 
-<!-- اختيار العالم -->
-<section id="world" class="screen">
- <div class="panel">
-  <h1>🗺️ اختر عالمك</h1>
-  <p class="sub">كل عالم له شخصياته وأسراره وألغازه.</p>
-  <button class="choice" onclick="start('brain')">🏰 قصر الألغاز <small>ألغاز ذكاء وتفكير</small></button>
-  <button class="choice" onclick="start('code')">🔐 مختبر الشفرات <small>رموز وأسرار وكلمات مخفية</small></button>
-  <button class="choice" onclick="start('detective')">🕵️ مدينة التحقيقات <small>قضايا وشهود وأدلة</small></button>
-  <button class="btn" onclick="showScreen('home')">رجوع</button>
+<div id="intro">
+ <div class="box">
+  <div style="font-size:70px">🏰</div>
+  <h1>مغامرة العقول</h1>
+  <p>ساعد آدم وزيرو في استكشاف القصر الغامض. تحرك واقفز، وقابل لونا، وحل الألغاز لفتح الأبواب!</p>
+  <button class="action" id="start">ابدأ المغامرة 🚀</button>
  </div>
-</section>
+</div>
 
-<!-- اللعب -->
-<section id="game" class="screen">
- <div class="panel">
-  <h2 id="worldTitle">🏰 قصر الألغاز</h2>
-  <div class="stats">
-   <div class="stat">⭐ النقاط<b id="score">0</b></div>
-   <div class="stat">❤️ المحاولات<b id="lives">3</b></div>
-   <div class="stat">📍 المرحلة<b id="stage">1</b></div>
-  </div>
-  <div class="progress"><div id="progressFill"></div></div>
-
-  <div class="scene">
-   <div id="sceneEmoji" style="font-size:65px"><span id="runner">🏃</span></div>
-   <div id="sceneName">داخل القصر الغامض</div>
-  </div>
-
-  <div class="characters">
-   <div class="character"><span class="avatar" id="mainHero">🕵️</span><small id="heroName">آدم المحقق</small></div>
-   <div class="character"><span class="avatar" id="helper">🧙</span><small id="helperName">لونا الساحرة</small></div>
-  </div>
-
-  <div class="dialog" id="dialog">
-   <strong>آدم:</strong> مستعد للمغامرة؟ ركز في الأدلة!
-  </div>
-
-  <div class="tag" id="questionType">لغز ذكاء</div>
-  <div id="question">السؤال يظهر هنا</div>
+<div id="puzzle" class="hidden">
+ <div class="box">
+  <div style="font-size:48px">🧙‍♀️</div>
+  <h2>لونا الساحرة</h2>
+  <p id="story">لن تفتح البوابة إلا إذا حللت اللغز!</p>
+  <h3 id="question"></h3>
   <div id="answers"></div>
-  <div id="feedback"></div>
-  <button class="btn hidden" id="nextBtn" onclick="nextQuestion()">تابع المغامرة ←</button>
-  <button class="choice" onclick="showScreen('world')">🚪 الخروج للعوالم</button>
+  <p id="feedback"></p>
+  <button class="action hidden" id="continue">تابع المغامرة</button>
  </div>
-</section>
+</div>
 
-<!-- النهاية -->
-<section id="ending" class="screen">
- <div class="panel" style="text-align:center">
-  <div id="endEmoji" style="font-size:85px">🏆</div>
-  <h1 id="endTitle">أحسنت!</h1>
-  <p class="sub" id="endText"></p>
-  <div class="dialog" id="endStory"></div>
-  <button class="btn" onclick="showScreen('world')">🗺️ عالم جديد</button>
-  <button class="choice" onclick="showScreen('home')">🏠 القائمة الرئيسية</button>
+<div id="ending" class="hidden">
+ <div class="box">
+  <div style="font-size:70px">🏆</div>
+  <h1>بطل العقول!</h1>
+  <p id="resultText">لقد أكملت المغامرة!</p>
+  <button class="action" onclick="restart()">العب من جديد</button>
  </div>
-</section>
-
-<div class="footer">SHIFRAT AL AQL • ADVENTURE EDITION</div>
+</div>
 </div>
 
 <script>
-const data={
-brain:{
- title:"🏰 قصر الألغاز",scene:"القصر المسحور",hero:"🧙",heroName:"لونا الساحرة",
- helper:"🕵️",helperName:"آدم المحقق",
- intro:"لونا: القصر مليء بالأسرار! افتح الأبواب بحل الألغاز.",
- questions:[
-  ["شيء تملكه أنت، لكن الناس يستخدمونه أكثر منك؟",["اسمك","قلمك","حذاؤك","كتابك"],0,"آدم: فكر في شيء يناديك به الآخرون!"],
-  ["له أوراق وليس نباتًا، وله جلد وليس حيوانًا؟",["الشجرة","الكتاب","الحقيبة","الزهرة"],1,"لونا: ستجده في المكتبة!"],
-  ["شيء إذا نطقت اسمه اختفى؟",["الصمت","الظل","النور","الهواء"],0,"آدم: جرب أن تنطق الإجابة!"],
-  ["يمتلئ بالثقوب ومع ذلك يحتفظ بالماء؟",["السلة","الإسفنج","الشبكة","الزجاج"],1,"لونا: شيء نستخدمه في التنظيف!"],
-  ["له رقبة وليس له رأس؟",["الزجاجة","الإنسان","الحصان","الطائر"],0,"آدم: ابحث عنه في المطبخ!"],
-  ["ما الذي يمكنك كسره دون أن تلمسه؟",["الزجاج","الوعد","الحجر","الباب"],1,"لونا: فكر في شيء تقوله لشخص!"],
-  ["كلما زاد نقص، ما هو؟",["العمر المتبقي","الطعام","المال","الضوء"],0,"آدم: فكر في الوقت الذي يمر!"]
- ]},
-code:{
- title:"🔐 مختبر الشفرات",scene:"المختبر السري",hero:"🤖",heroName:"زيرو الروبوت",
- helper:"🧙",helperName:"لونا الساحرة",
- intro:"زيرو: تم تفعيل نظام الشفرات! اكتشف الكلمة السرية.",
- questions:[
-  ["أي رمز يمثل كلمة المرور السرية في اللغز: مفتاح + باب؟",["دخول","سفر","طعام","نوم"],0,"زيرو: فكر في وظيفة المفتاح مع الباب."],
-  ["رتب الحروف لتكتشف اسم شيء نراه في السماء: (م، ق، ر)",["قمر","مقر","رمق","رقم"],0,"زيرو: الحروف تصنع شيئًا يضيء ليلًا."],
-  ["الكلمة المخفية هي عكس كلمة (مفتوح). ما هي؟",["واسع","مغلق","قديم","بعيد"],1,"زيرو: عكس الباب المفتوح."],
-  ["أي كلمة لا تنتمي للمجموعة: مفتاح، قفل، باب، موز؟",["مفتاح","قفل","باب","موز"],3,"لونا: ثلاثة أشياء تخص الأبواب."],
-  ["إذا كانت الرسالة تقول: ابحث حيث تنام الكتب، فأين تذهب؟",["المطبخ","المكتبة","الحديقة","الشارع"],1,"زيرو: الكتب تعيش على الأرفف!"],
-  ["ما الشيء الذي يحول الكلام إلى كلمات مكتوبة؟",["الميكروفون","لوحة المفاتيح","السماعة","الكاميرا"],1,"زيرو: تستخدمه للكتابة على الكمبيوتر."],
-  ["أي رمز يناسب رسالة سرية تحتاج إلى فتحها؟",["🔒","🍎","🌳","⚽"],0,"لونا: الرسالة محمية بقفل."]
- ]},
-detective:{
- title:"🕵️ مدينة التحقيقات",scene:"مسرح الجريمة",hero:"🕵️",heroName:"آدم المحقق",
- helper:"🤖",helperName:"زيرو الروبوت",
- intro:"آدم: لدينا قضية غامضة. افحص الأدلة ولا تتسرع في الحكم.",
- questions:[
-  ["وجدنا آثار أقدام مبللة تنتهي عند النافذة المفتوحة. ما أول شيء نفحصه؟",["النافذة","الطعام","الساعة","الكتب"],0,"زيرو: الآثار تقودنا إلى النافذة."],
-  ["قال شاهد إنه كان نائمًا، لكنه وصف ما حدث بالتفصيل. ما السؤال الأهم؟",["ماذا أكل؟","كيف عرف ما حدث؟","أين يسكن؟","ما لونه المفضل؟"],1,"آدم: نحتاج معرفة مصدر معلوماته."],
-  ["اختفت لوحة من غرفة مغلقة، ووجدنا زجاجًا مكسورًا بجانب النافذة. أين نبحث أولًا؟",["داخل الخزانة","عند النافذة","في المطبخ","تحت السرير"],1,"زيرو: الزجاج قد يكون دليلًا مهمًا."],
-  ["شخص يقول إنه لم يدخل الغرفة، لكن حذاءه عليه غبار من أرضيتها. ما الذي نحتاجه؟",["دليل إضافي","تخمين سريع","اتهامه فورًا","إنهاء التحقيق"],0,"آدم: الدليل مهم قبل الاتهام."],
-  ["وجدنا رسالة ممزقة وبجانبها سلة مهملات فارغة. ما الخطوة المناسبة؟",["تجاهلها","فحص قطع الرسالة","إغلاق القضية","سؤال الطقس"],1,"زيرو: ربما تحمل الرسالة سر القضية."],
-  ["ثلاثة شهود اختلفوا في وصف لون السيارة. ماذا يفعل المحقق؟",["يختار أول شاهد","يقارن أقوالهم بالأدلة","يتجاهل الجميع","يخمن اللون"],1,"آدم: نقارن الشهادات بالأدلة المتاحة."],
-  ["وجدنا بابًا مفتوحًا ولا توجد آثار اقتحام. ما الاحتمال الذي يجب فحصه؟",["وجود مفتاح أو شخص لديه إذن","وجود وحش","اختفاء الباب","لا يوجد تحقيق"],0,"زيرو: ربما استُخدم مفتاح."]
- ]}
-};
+const canvas=document.getElementById("world");
+const ctx=canvas.getContext("2d");
 
-let world="brain",items=[],pos=0,score=0,lives=3,locked=false;
-function showScreen(id){
- document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
- document.getElementById(id).classList.add("active");
+let W=900,H=600,scale=1;
+let running=false,paused=false;
+let score=Number(localStorage.getItem("brainScore")||0);
+let level=Number(localStorage.getItem("brainLevel")||1);
+let camera=0,frame=0;
+let keys={left:false,right:false};
+let player={x:100,y:420,vx:0,vy:0,ground:false};
+let robot={x:45,y:360};
+let doorX=760;
+let solved={};
+let currentPuzzle=null;
+
+document.getElementById("score").textContent=score;
+document.getElementById("level").textContent=level;
+
+function resize(){
+ const dpr=Math.min(devicePixelRatio||1,2);
+ W=900;H=600;
+ canvas.width=W*dpr;canvas.height=H*dpr;
+ ctx.setTransform(dpr,0,0,dpr,0,0);
 }
-function start(type){
- world=type;items=[...data[type].questions].sort(()=>Math.random()-.5);
- pos=0;score=0;lives=3;
- showScreen("game");
- document.getElementById("worldTitle").textContent=data[type].title;
- document.getElementById("mainHero").textContent=data[type].hero;
- document.getElementById("heroName").textContent=data[type].heroName;
- document.getElementById("helper").textContent=data[type].helper;
- document.getElementById("helperName").textContent=data[type].helperName;
- document.getElementById("dialog").textContent=data[type].intro;
- loadQuestion();
+resize();
+window.addEventListener("resize",resize);
+
+function rounded(x,y,w,h,r,color){
+ ctx.fillStyle=color;ctx.beginPath();
+ ctx.roundRect(x,y,w,h,r);ctx.fill();
 }
-function loadQuestion(){
- if(lives<=0||pos>=items.length){finish();return}
- locked=false;
- let q=items[pos];
- document.getElementById("sceneName").textContent=data[world].scene;
- document.getElementById("questionType").textContent=
- world==="brain"?"🧠 لغز ذكاء":world==="code"?"🔐 شفرة سرية":"🕵️ ملف تحقيق";
- document.getElementById("question").textContent=q[0];
- document.getElementById("dialog").textContent=q[3];
- document.getElementById("score").textContent=score;
- document.getElementById("lives").textContent="❤️".repeat(lives)+"🖤".repeat(3-lives);
- document.getElementById("stage").textContent=pos+1;
- document.getElementById("progressFill").style.width=(pos/items.length*100)+"%";
+function circle(x,y,r,color){
+ ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+}
+function line(x1,y1,x2,y2,color,width){
+ ctx.strokeStyle=color;ctx.lineWidth=width;
+ ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+}
+
+function drawBackground(){
+ let sky=ctx.createLinearGradient(0,0,0,H);
+ sky.addColorStop(0,"#182452");
+ sky.addColorStop(1,"#566c9a");
+ ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+
+ for(let i=0;i<45;i++){
+  let x=(i*173-camera*.12+W*10)%W;
+  let y=(i*79)%270;
+  circle(x,y,1.5,"#ffffffaa");
+ }
+ // القمر
+ circle(750,95,43,"#fff0bd");
+ circle(765,80,43,"#263b70");
+
+ // الجبال
+ ctx.fillStyle="#273c66";
+ ctx.beginPath();ctx.moveTo(0,400);
+ for(let x=0;x<=W;x+=100)ctx.lineTo(x,300+Math.sin((x+camera*.1)/100)*45);
+ ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.fill();
+
+ // القلعة
+ ctx.fillStyle="#29375d";
+ ctx.fillRect(570,205,260,300);
+ ctx.fillRect(550,175,55,330);
+ ctx.fillRect(790,175,55,330);
+ for(let x of [550,790]){
+  ctx.fillStyle="#50618d";
+  ctx.fillRect(x-5,160,65,20);
+ }
+ ctx.fillStyle="#1b2447";
+ ctx.fillRect(665,370,75,135);
+ ctx.beginPath();ctx.arc(702,370,37,Math.PI,0);ctx.fill();
+ ctx.fillStyle="#f5d67d";
+ ctx.fillRect(690,420,23,85);
+ circle(705,460,4,"#fff4ba");
+}
+
+function drawGround(){
+ ctx.fillStyle="#263b3b";ctx.fillRect(0,500,W,100);
+ ctx.fillStyle="#3d805c";ctx.fillRect(0,495,W,12);
+ for(let x=0;x<W;x+=35){
+  line(x,495,x+10,485,"#75c77a",3);
+ }
+ // منصات
+ rounded(300,420,120,18,7,"#71805c");
+ rounded(455,365,110,18,7,"#71805c");
+ rounded(650,430,100,18,7,"#71805c");
+}
+
+function drawTree(x,y){
+ ctx.fillStyle="#69462e";ctx.fillRect(x-8,y-65,16,65);
+ circle(x,y-80,32,"#267d5d");
+ circle(x-20,y-65,20,"#32946b");
+ circle(x+19,y-66,22,"#23835b");
+}
+
+function drawAdam(x,y){
+ ctx.save();ctx.translate(x,y);
+ let walk=Math.sin(frame*.22)*5*(Math.abs(player.vx)>.1?1:0);
+ // الظل
+ ctx.globalAlpha=.25;circle(0,0,23,"#000");ctx.globalAlpha=1;
+ // الرجلان
+ line(-8,-30,-10+walk,-5,"#263c75",9);
+ line(8,-30,10-walk,-5,"#263c75",9);
+ rounded(-20+walk,-8,18,8,4,"#161d38");
+ rounded(4-walk,-8,18,8,4,"#161d38");
+ // الجسم
+ rounded(-19,-68,38,40,10,"#2872b8");
+ rounded(-19,-45,38,9,4,"#e2b65b");
+ // الذراعان
+ line(-17,-62,-27,-36,"#e8b78d",8);
+ line(17,-62,27,-38,"#e8b78d",8);
+ // الرأس
+ circle(0,-84,22,"#edbd91");
+ // الشعر
+ ctx.fillStyle="#30233b";
+ ctx.beginPath();ctx.arc(0,-91,22,Math.PI,Math.PI*2);ctx.fill();
+ ctx.fillRect(-21,-95,42,9);
+ // العين
+ circle(-7,-83,3,"#18223d");circle(7,-83,3,"#18223d");
+ // وشاح
+ rounded(-19,-69,38,8,3,"#e6c34c");
+ ctx.restore();
+}
+
+function drawRobot(x,y){
+ ctx.save();ctx.translate(x,y);
+ let bob=Math.sin(frame*.09)*7;
+ // هوائي
+ line(0,-65,0,-80,"#9caaff",3);
+ circle(0,-83,5,"#ffdf73");
+ rounded(-22,-62,44,42,12,"#9baed4");
+ rounded(-17,-54,34,23,7,"#263b68");
+ circle(-8,-43,4,"#62f4e3");circle(8,-43,4,"#62f4e3");
+ rounded(-18,-20,36,9,5,"#657aa8");
+ line(-22,-48,-33,-35,"#a9b9df",6);
+ line(22,-48,33,-35,"#a9b9df",6);
+ ctx.restore();
+}
+
+function drawWizard(x,y){
+ ctx.save();ctx.translate(x,y);
+ // عباءة
+ ctx.fillStyle="#774bd0";
+ ctx.beginPath();ctx.moveTo(-24,-8);ctx.lineTo(-18,-65);
+ ctx.lineTo(18,-65);ctx.lineTo(25,-8);ctx.fill();
+ // وجه
+ circle(0,-77,18,"#efc39e");
+ // شعر
+ ctx.fillStyle="#573b83";
+ ctx.beginPath();ctx.arc(0,-83,19,Math.PI,Math.PI*2);ctx.fill();
+ // قبعة
+ ctx.fillStyle="#633cc2";
+ ctx.beginPath();ctx.moveTo(-25,-91);ctx.lineTo(0,-135);
+ ctx.lineTo(25,-91);ctx.closePath();ctx.fill();
+ ctx.fillRect(-27,-94,54,7);
+ circle(-6,-76,2,"#222");circle(6,-76,2,"#222");
+ // عصا
+ line(25,-45,38,-95,"#d8b77a",5);
+ circle(38,-99,8,"#a8e8ff");
+ ctx.restore();
+}
+
+function drawDoor(){
+ rounded(doorX-30,390,60,110,12,"#88522d");
+ ctx.beginPath();ctx.arc(doorX,390,30,Math.PI,0);ctx.fillStyle="#88522d";ctx.fill();
+ rounded(doorX-22,405,44,95,8,"#4c2d36");
+ circle(doorX+14,450,4,"#f9db80");
+ circle(doorX,380,5,"#fff0a3");
+}
+
+function draw(){
+ frame++;
+ ctx.clearRect(0,0,W,H);
+ drawBackground();
+ ctx.save();
+ ctx.translate(-camera,0);
+ drawTree(90,495);drawTree(460,495);
+ drawGround();
+ drawDoor();
+ drawWizard(doorX+75,500);
+ drawRobot(player.x-52,player.y-75+Math.sin(frame*.09)*5);
+ drawAdam(player.x,player.y);
+ ctx.restore();
+}
+
+function update(){
+ if(!running||paused)return;
+ if(keys.right)player.vx=4;
+ else if(keys.left)player.vx=-4;
+ else player.vx*=.8;
+
+ player.x+=player.vx;
+ player.x=Math.max(30,Math.min(850,player.x));
+ player.vy+=.55;
+ player.y+=player.vy;
+ if(player.y>=500){player.y=500;player.vy=0;player.ground=true}
+ else player.ground=false;
+
+ camera=Math.max(0,player.x-400);
+ if(player.x>doorX-45&&player.x<doorX+45){
+  document.getElementById("message").textContent="✨ وصلت للبوابة! اضغط على الباب";
+  if(!paused && !solved[level])openPuzzle();
+ }else{
+  document.getElementById("message").textContent="تحرك نحو الباب واكتشف السر!";
+ }
+}
+
+function loop(){update();draw();requestAnimationFrame(loop)}
+loop();
+
+function bindMove(id,key){
+ const el=document.getElementById(id);
+ el.addEventListener("pointerdown",e=>{e.preventDefault();keys[key]=true});
+ ["pointerup","pointerleave","pointercancel"].forEach(ev=>
+  el.addEventListener(ev,e=>{keys[key]=false})
+ );
+}
+bindMove("left","left");
+bindMove("right","right");
+
+document.getElementById("jump").addEventListener("pointerdown",e=>{
+ e.preventDefault();
+ if(player.ground&&!paused){player.vy=-12;player.ground=false}
+});
+
+const puzzles=[
+ {q:"شيء تملكه أنت ويستخدمه الآخرون أكثر منك، ما هو؟",
+  a:["اسمك","قلمك","حذاؤك"],c:0},
+ {q:"شيء إذا نطقت اسمه اختفى، ما هو؟",
+  a:["الصمت","الظل","النور"],c:0},
+ {q:"له أوراق وليس نباتًا، وله جلد وليس حيوانًا، ما هو؟",
+  a:["الكتاب","الشجرة","الحقيبة"],c:0},
+ {q:"ما الشيء الذي يمكنك كسره دون لمسه؟",
+  a:["الحجر","الوعد","الزجاج"],c:1},
+ {q:"يمتلئ بالثقوب لكنه يحتفظ بالماء، ما هو؟",
+  a:["الإسفنج","السلة","الشبكة"],c:0}
+];
+
+function openPuzzle(){
+ paused=true;currentPuzzle=puzzles[(level-1)%puzzles.length];
+ document.getElementById("puzzle").classList.remove("hidden");
+ document.getElementById("question").textContent=currentPuzzle.q;
  document.getElementById("feedback").textContent="";
- document.getElementById("nextBtn").classList.add("hidden");
+ document.getElementById("continue").classList.add("hidden");
  let area=document.getElementById("answers");area.innerHTML="";
- q[1].forEach((answer,i)=>{
+ currentPuzzle.a.forEach((a,i)=>{
   let b=document.createElement("button");
-  b.className="choice";b.textContent=answer;
-  b.onclick=()=>answerQuestion(i,b);
+  b.className="answer";b.textContent=a;
+  b.onclick=()=>checkPuzzle(i,b);
   area.appendChild(b);
  });
 }
-function answerQuestion(n,btn){
- if(locked)return;locked=true;
- let q=items[pos],buttons=document.querySelectorAll("#answers button");
- buttons.forEach(b=>b.disabled=true);
- if(n===q[2]){
-  score+=10;btn.classList.add("good");
-  document.getElementById("feedback").textContent="✨ ممتاز! اكتشفت السر وحصلت على 10 نقاط.";
-  document.getElementById("sceneEmoji").textContent="🎉";
+function checkPuzzle(n,btn){
+ let all=document.querySelectorAll(".answer");
+ all.forEach(b=>b.disabled=true);
+ if(n===currentPuzzle.c){
+  score+=20;solved[level]=true;
+  document.getElementById("feedback").textContent="🎉 أحسنت! البوابة انفتحت!";
+  btn.style.background="#16744e";
+  localStorage.setItem("brainScore",score);
+  document.getElementById("score").textContent=score;
+  document.getElementById("continue").textContent="ادخل البوابة 🚪";
+  document.getElementById("continue").classList.remove("hidden");
  }else{
-  lives--;btn.classList.add("bad");
-  buttons[q[2]].classList.add("good");
-  document.getElementById("feedback").textContent="لم تكن هذه الإجابة. "+q[3];
-  document.getElementById("sceneEmoji").textContent="😮";
+  document.getElementById("feedback").textContent="❌ حاول مرة أخرى! فكر في اللغز.";
+  btn.style.background="#90364e";
+  all[currentPuzzle.c].disabled=false;
+  all[currentPuzzle.c].style.border="2px solid #a5e9ba";
+  all.forEach((b,i)=>{if(i!==currentPuzzle.c)b.disabled=false});
  }
- document.getElementById("score").textContent=score;
- document.getElementById("lives").textContent="❤️".repeat(lives)+"🖤".repeat(3-lives);
- document.getElementById("nextBtn").classList.remove("hidden");
- document.getElementById("nextBtn").textContent=lives===0?"عرض النتيجة":"تابع المغامرة ←";
 }
-function nextQuestion(){pos++;loadQuestion()}
-function finish(){
- showScreen("ending");
- let won=lives>0;
- document.getElementById("endEmoji").textContent=won?"🏆":"💔";
- document.getElementById("endTitle").textContent=won?"لقد أنقذت العالم!":"انتهت المحاولات!";
- document.getElementById("endText").textContent=
- "جمعت "+score+" نقطة في "+data[world].title;
- document.getElementById("endStory").textContent=won?
- "أحسنت! آدم وزيرو ولونا يشكرونك. لقد أثبت أنك صاحب عقل ذكي وشجاع!":
- "لا تستسلم! الأبطال يتعلمون من كل محاولة. ارجع وجرب مغامرة جديدة.";
+document.getElementById("continue").onclick=()=>{
+ document.getElementById("puzzle").classList.add("hidden");
+ paused=false;
+ level++;
+ if(level>puzzles.length){
+  running=false;
+  document.getElementById("ending").classList.remove("hidden");
+  document.getElementById("resultText").textContent="جمعت "+score+" نقطة وأكملت مغامرة القصر!";
+  localStorage.setItem("brainLevel",1);
+ }else{
+  player.x=80;player.y=500;camera=0;
+  document.getElementById("level").textContent=level;
+  localStorage.setItem("brainLevel",level);
+ }
+};
+document.getElementById("start").onclick=()=>{
+ document.getElementById("intro").classList.add("hidden");
+ running=true;paused=false;
+ player.x=100;player.y=500;
+};
+function restart(){
+ score=0;level=1;solved={};player.x=100;player.y=500;camera=0;
+ localStorage.setItem("brainScore",0);
+ localStorage.setItem("brainLevel",1);
+ document.getElementById("score").textContent=0;
+ document.getElementById("level").textContent=1;
+ document.getElementById("ending").classList.add("hidden");
+ document.getElementById("intro").classList.remove("hidden");
 }
 </script>
 </body>
