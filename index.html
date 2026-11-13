@@ -8,56 +8,50 @@
 <title>شفرة العقل 🧠</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;background:#080b1b;color:white;
- font-family:Arial,sans-serif;text-align:center;overflow-x:hidden
-}
+body{margin:0;min-height:100vh;background:#080b1b;color:white;font-family:Arial;text-align:center;overflow-x:hidden}
 #stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .container{width:min(460px,94%);margin:auto;padding:20px 0 40px}
-.logo{font-size:55px;animation:glow 2s infinite alternate}
-@keyframes glow{to{transform:scale(1.13);filter:drop-shadow(0 0 20px #ae6aff)}}
-h1{color:#d3b2ff;text-shadow:0 0 20px #8e4dff;font-size:32px}
+.logo{font-size:50px;animation:glow 2s infinite alternate}
+@keyframes glow{to{transform:scale(1.12);filter:drop-shadow(0 0 20px #ae6aff)}}
+h1{color:#d3b2ff;text-shadow:0 0 20px #8e4dff}
 .sub{color:#aab4d4;font-size:14px}
-.card{
- background:linear-gradient(145deg,#202849eF,#11182feF);
- border:1px solid #7056a8;border-radius:23px;
- padding:22px 16px;margin-top:20px;
- box-shadow:0 12px 40px #0009,0 0 25px #8250ff22
-}
+.card{background:linear-gradient(145deg,#202849ee,#11182fee);border:1px solid #7056a8;border-radius:23px;padding:20px 15px;margin-top:20px;box-shadow:0 12px 40px #0009}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .stat{background:#0a1228;border:1px solid #38466d;border-radius:13px;padding:10px 3px;font-size:12px;color:#b7c5e5}
 .stat b{display:block;color:#d4b0ff;font-size:20px;margin-top:5px}
-#hearts{margin:15px;font-size:23px;letter-spacing:4px}
-.timer{width:80px;height:80px;margin:15px auto;border-radius:50%;padding:6px;background:conic-gradient(#a56aff 360deg,#ffffff20 0deg);box-shadow:0 0 20px #9250ff55}
-.timer div{background:#10182e;height:100%;border-radius:50%;display:grid;place-items:center;font-size:27px;font-weight:bold}
-#question{min-height:95px;display:grid;place-items:center;font-size:25px;line-height:1.7;padding:10px}
-input{width:100%;padding:16px;border-radius:13px;border:1px solid #765cbb;background:#080e21;color:white;text-align:center;font-size:23px;outline:none}
-button{padding:14px 18px;margin:6px;border:0;border-radius:13px;font-size:16px;font-weight:bold;cursor:pointer;transition:.2s}
-button:active{transform:scale(.94)}
-.primary{background:linear-gradient(110deg,#7642df,#bd65ff);color:white;box-shadow:0 5px 18px #8549e955}
-.secondary{background:#263653;color:#e1eaff}
-.diff{display:block;width:100%;margin:9px 0;border:1px solid #53618a;background:#172342;color:white}
-.diff.active{background:linear-gradient(90deg,#713fd2,#a354eb);border-color:#d6b4ff}
-#message{min-height:30px;margin-top:14px;font-weight:bold}
-.good{color:#50ffbd;animation:pop .4s}
-.bad{color:#ff7896;animation:shake .3s}
-@keyframes pop{50%{transform:scale(1.15)}}
-@keyframes shake{25%{transform:translateX(7px)}75%{transform:translateX(-7px)}}
-.footer{font-size:12px;color:#7e8cad;margin-top:20px}
-.overlay{position:fixed;inset:0;background:#050817ed;display:grid;place-items:center;padding:18px;z-index:4;overflow-y:auto}
+#hearts{margin:14px;font-size:22px}
+.timer{width:75px;height:75px;margin:12px auto;border-radius:50%;padding:5px;background:conic-gradient(#a56aff 360deg,#ffffff20 0deg)}
+.timer div{background:#10182e;height:100%;border-radius:50%;display:grid;place-items:center;font-size:26px;font-weight:bold}
+#category{display:inline-block;padding:8px 16px;border-radius:20px;background:#39265f;color:#e0c8ff;font-size:13px;margin:12px}
+#question{min-height:100px;display:grid;place-items:center;font-size:23px;line-height:1.7;padding:12px}
+#choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.choice{margin:0;background:#202d4c;color:white;border:1px solid #586b99;border-radius:13px;padding:15px 7px;font-size:17px}
+.choice:hover{background:#50317f}
+.choice.correct{background:#126044;border-color:#55ffc2}
+.choice.wrong{background:#70263d;border-color:#ff7896}
+input{width:100%;padding:15px;border-radius:13px;border:1px solid #765cbb;background:#080e21;color:white;text-align:center;font-size:22px;outline:none}
+button{cursor:pointer;font-weight:bold}
+.primary{padding:14px 20px;margin:8px;border:0;border-radius:13px;background:linear-gradient(110deg,#7642df,#bd65ff);color:white;font-size:16px}
+.secondary{padding:13px 17px;margin:7px;border:0;border-radius:13px;background:#263653;color:white;font-size:15px}
+#message{min-height:30px;margin-top:13px;font-weight:bold;line-height:1.7}
+.good{color:#55ffc2}.bad{color:#ff7896}
+#explanation{color:#b9c8e9;font-size:14px;line-height:1.7}
+.overlay{position:fixed;inset:0;background:#050817ed;display:grid;place-items:center;padding:18px;z-index:4}
 .panel{width:min(390px,100%);padding:25px 20px;border-radius:25px;background:linear-gradient(145deg,#202849,#11172c);border:1px solid #9064d0;box-shadow:0 0 45px #8046ff44}
-.panel h2{color:#d9baff;font-size:27px}
+.panel h2{color:#d9baff}
+.diff{display:block;width:100%;margin:9px 0;padding:13px;border:1px solid #53618a;border-radius:12px;background:#172342;color:white;font-size:16px}
+.diff.active{background:#713fd2;border-color:#d6b4ff}
 .hidden{display:none!important}
 #game{display:none}
+.footer{font-size:12px;color:#7e8cad;margin-top:20px}
 </style>
 </head>
 <body>
 <canvas id="stars"></canvas>
-
 <div class="container">
  <div class="logo">🧠</div>
  <h1>شفرة العقل</h1>
- <p class="sub">عقلك هو سلاحك... هل تستطيع الاستمرار؟</p>
+ <p class="sub">كل سؤال تحدٍ جديد لعقلك ♾️</p>
 
  <div id="game">
   <div class="card">
@@ -68,14 +62,19 @@ button:active{transform:scale(.94)}
    </div>
    <div id="hearts">❤️ ❤️ ❤️</div>
    <div class="timer" id="timerRing"><div id="timer">20</div></div>
+   <div id="category">🧩 لغز</div>
    <div id="question"></div>
-   <input id="answer" type="number" inputmode="numeric" placeholder="اكتب الإجابة" disabled>
-   <br><br>
-   <button class="primary" id="checkBtn" onclick="checkAnswer()">تحقق من الإجابة</button>
-   <button class="secondary" id="hintBtn" onclick="showHint()">💡 تلميح</button>
+   <div id="choices"></div>
+   <div id="inputArea" class="hidden">
+    <input id="answer" placeholder="اكتب إجابتك هنا" autocomplete="off">
+    <button class="primary" onclick="checkInput()">تأكيد الإجابة</button>
+   </div>
    <div id="message"></div>
+   <div id="explanation"></div>
+   <button class="secondary" id="hintBtn" onclick="showHint()">💡 تلميح</button>
+   <button class="primary hidden" id="nextBtn" onclick="nextQuestion()">السؤال التالي ←</button>
   </div>
-  <div class="footer">♾️ ألغاز متجددة بلا نهاية</div>
+  <div class="footer">ألغاز متنوعة تتجدد مع كل جولة ✨</div>
  </div>
 </div>
 
@@ -83,44 +82,43 @@ button:active{transform:scale(.94)}
  <div class="panel">
   <div style="font-size:55px">🔐</div>
   <h2>مرحباً بك في شفرة العقل</h2>
-  <p class="sub">اختر مستوى البداية واستعد للتحدي</p>
-  <button class="diff active" onclick="chooseDifficulty('easy',this)">🟢 سهل</button>
-  <button class="diff" onclick="chooseDifficulty('medium',this)">🟡 متوسط</button>
-  <button class="diff" onclick="chooseDifficulty('hard',this)">🔴 صعب</button>
-  <button class="diff" onclick="chooseDifficulty('impossible',this)">💀 مستحيل</button>
-  <button class="primary" onclick="startGame()">ابدأ المغامرة 🚀</button>
+  <p class="sub">اختر الصعوبة وابدأ اختبار ذكائك</p>
+  <button class="diff active" onclick="choose('easy',this)">🟢 سهل</button>
+  <button class="diff" onclick="choose('medium',this)">🟡 متوسط</button>
+  <button class="diff" onclick="choose('hard',this)">🔴 صعب</button>
+  <button class="diff" onclick="choose('impossible',this)">💀 مستحيل</button>
+  <button class="primary" onclick="startGame()">ابدأ التحدي 🚀</button>
  </div>
 </div>
 
 <div class="overlay hidden" id="endScreen">
  <div class="panel">
   <div style="font-size:55px">🏆</div>
-  <h2>انتهت المحاولات!</h2>
+  <h2>انتهت اللعبة!</h2>
   <p class="sub" id="finalText"></p>
-  <button class="primary" onclick="backToMenu()">العب من جديد 🔥</button>
+  <button class="primary" onclick="backToMenu()">العب مرة أخرى 🔥</button>
  </div>
 </div>
 
 <script>
-// خلفية النجوم المتحركة
+// خلفية النجوم
 const canvas=document.getElementById("stars");
 const ctx=canvas.getContext("2d");
 let stars=[];
 function resize(){
  canvas.width=innerWidth;canvas.height=innerHeight;
  stars=Array.from({length:100},()=>({
-  x:Math.random()*canvas.width,y:Math.random()*canvas.height,
-  r:Math.random()*2+.4,s:Math.random()*.6+.15
+ x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+ r:Math.random()*2+.4,s:Math.random()*.6+.15
  }));
 }
-resize();
-addEventListener("resize",resize);
+resize();addEventListener("resize",resize);
 function animate(){
  ctx.clearRect(0,0,canvas.width,canvas.height);
  stars.forEach(s=>{
-  ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-  ctx.fillStyle="rgba(190,160,255,.8)";ctx.fill();
-  s.y-=s.s;if(s.y<0){s.y=canvas.height;s.x=Math.random()*canvas.width}
+ ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ ctx.fillStyle="#c3a5ff";ctx.fill();
+ s.y-=s.s;if(s.y<0){s.y=canvas.height;s.x=Math.random()*canvas.width}
  });
  requestAnimationFrame(animate);
 }
@@ -129,95 +127,181 @@ animate();
 // إعداد اللعبة
 let score=0,level=1,lives=3,time=20;
 let difficulty="easy",current=null,clock=null;
-let locked=true,hinted=false,streak=0;
-const settings={
- easy:{time:25,base:10},
- medium:{time:20,base:30},
- hard:{time:15,base:80},
- impossible:{time:10,base:200}
-};
+let locked=true,hinted=false,streak=0,lastType="";
 let best=Number(localStorage.getItem("brainBest")||0);
 document.getElementById("best").textContent=best;
 
-function chooseDifficulty(d,btn){
+const settings={
+ easy:{time:30,max:10},
+ medium:{time:22,max:30},
+ hard:{time:16,max:100},
+ impossible:{time:12,max:300}
+};
+function choose(d,btn){
  difficulty=d;
  document.querySelectorAll(".diff").forEach(x=>x.classList.remove("active"));
  btn.classList.add("active");
 }
 function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function shuffle(arr){return arr.sort(()=>Math.random()-.5)}
 
-function makePuzzle(){
- let cfg=settings[difficulty];
- let max=Math.min(cfg.base+level*3,5000);
- let type=rand(1,4),a,b,answer,q,h;
- if(type===1){
-  a=rand(2,max);b=rand(2,max);
-  answer=a+b;q=`🧩 ${a} + ${b} = ؟`;h="اجمع العددين";
- }else if(type===2){
-  a=rand(2,max);b=rand(1,a);
-  answer=a-b;q=`🧩 ${a} - ${b} = ؟`;h="اطرح الأصغر من الأكبر";
- }else if(type===3){
-  a=rand(2,Math.min(9+level,100));
-  b=rand(2,Math.min(9+level,100));
-  answer=a*b;q=`🧩 ${a} × ${b} = ؟`;h="فكر في جدول الضرب";
+const riddles=[
+ {q:"شيء كلما أخذت منه كبر، ما هو؟",a:"الحفرة",o:["الحفرة","البحر","الكتاب","الجبل"],h:"فكر في شيء نحفره"},
+ {q:"له أسنان ولا يعض، ما هو؟",a:"المشط",o:["الأسد","المشط","الكلب","المنشار"],h:"تستخدمه لترتيب شعرك"},
+ {q:"يمشي بلا أرجل ويبكي بلا عيون، ما هو؟",a:"السحاب",o:["السحاب","الإنسان","النهر","الطائر"],h:"تراه في السماء"},
+ {q:"ما الشيء الذي تملكه أنت ويستخدمه الآخرون أكثر منك؟",a:"اسمك",o:["اسمك","مالك","هاتفك","بيتك"],h:"يناديك به الناس"},
+ {q:"شيء له عين واحدة ولا يرى، ما هو؟",a:"الإبرة",o:["الإبرة","المرآة","السمكة","الكاميرا"],h:"تستخدم في الخياطة"},
+ {q:"ما الشيء الذي يكتب ولا يقرأ؟",a:"القلم",o:["الكتاب","القلم","الطالب","المعلم"],h:"تمسكه بيدك للكتابة"},
+ {q:"ما الشيء الذي كلما زاد نقص؟",a:"العمر",o:["المال","العمر","الطول","الطعام"],h:"يمر مع مرور الأيام"}
+];
+
+const logic=[
+ {q:"أحمد أطول من علي، وعلي أطول من سامي. من الأقصر؟",a:"سامي",o:["أحمد","علي","سامي","لا يمكن معرفة ذلك"],h:"قارن بين الأطوال"},
+ {q:"في سباق، تجاوزت الشخص الثاني. ما مركزك الآن؟",a:"الثاني",o:["الأول","الثاني","الثالث","الرابع"],h:"أنت أخذت مكان الشخص الذي تجاوزته"},
+ {q:"لديك 3 تفاحات وأخذت 2. كم تفاحة معك؟",a:"2",o:["1","2","3","5"],h:"كم تفاحة أخذت بيدك؟"},
+ {q:"أب لديه 4 بنات، ولكل بنت أخ واحد. كم عدد الأبناء؟",a:"5",o:["4","5","8","9"],h:"كل البنات يشتركن في نفس الأخ"},
+ {q:"ساعة تدق 6 دقات في 5 ثوانٍ. كم ثانية تحتاج 12 دقة؟",a:"11",o:["10","11","12","15"],h:"بين 6 دقات توجد 5 فواصل زمنية"}
+];
+
+const words=[
+ {q:"ما عكس كلمة «غامض»؟",a:"واضح",o:["واضح","صعب","مجهول","بعيد"],h:"شيء مفهوم"},
+ {q:"أي كلمة لا تنتمي للمجموعة؟",a:"تفاحة",o:["قلم","كتاب","دفتر","تفاحة"],h:"ثلاثة أشياء تستخدم في الدراسة"},
+ {q:"رتب الحروف: ب - ا - ب، لتكوين كلمة",a:"باب",o:["باب","ببأ","أبب","بأب"],h:"شيء ندخل ونخرج منه"},
+ {q:"ما جمع كلمة «مفتاح»؟",a:"مفاتيح",o:["مفتاحات","مفاتيح","مفتاحون","مفتوح"],h:"تبدأ بحرف الميم"}
+];
+
+// مولد أنواع الأسئلة
+function makeQuestion(){
+ let types=["math","sequence","riddle","logic","word","shape"];
+ let available=types.filter(t=>t!==lastType);
+ let type=available[rand(0,available.length-1)];
+ lastType=type;
+ let max=Math.min(settings[difficulty].max+level*4,5000);
+ let q,a,h,options=null,mode="input",category="";
+
+ if(type==="math"){
+  let op=rand(1,3),x,y;
+  if(op===1){
+   x=rand(10,max);y=rand(1,max);a=x+y;
+   q=`احسب الناتج: ${x} + ${y} = ؟`;
+  }else if(op===2){
+   x=rand(10,max);y=rand(1,x);a=x-y;
+   q=`احسب الناتج: ${x} - ${y} = ؟`;
+  }else{
+   x=rand(2,Math.min(15+level,60));y=rand(2,12);a=x*y;
+   q=`احسب الناتج: ${x} × ${y} = ؟`;
+  }
+  h="راجع العملية الحسابية بهدوء";category="🔢 رياضيات";
+ }else if(type==="sequence"){
+  let step=rand(2,Math.min(5+level,30)),first=rand(1,30);
+  a=first+step*4;
+  q=`ما الرقم التالي؟<br>${first} ، ${first+step} ، ${first+step*2} ، ${first+step*3} ، ؟`;
+  h="ابحث عن الفرق الثابت بين الأرقام";category="🔍 متتاليات";
+ }else if(type==="riddle"){
+  let item=riddles[rand(0,riddles.length-1)];
+  q=item.q;a=item.a;h=item.h;options=item.o;mode="choice";category="💡 لغز ذكاء";
+ }else if(type==="logic"){
+  let item=logic[rand(0,logic.length-1)];
+  q=item.q;a=item.a;h=item.h;options=item.o;mode="choice";category="🧩 منطق";
+ }else if(type==="word"){
+  let item=words[rand(0,words.length-1)];
+  q=item.q;a=item.a;h=item.h;options=item.o;mode="choice";category="🔤 كلمات";
  }else{
-  let step=rand(2,Math.min(5+level,100));
-  let first=rand(1,30);
-  answer=first+step*4;
-  q=`🔍 أكمل المتتالية:<br>${first} ، ${first+step} ، ${first+step*2} ، ${first+step*3} ، ؟`;
-  h="الفرق بين كل رقم والذي يليه ثابت";
+  let shapes=["🔵","🔵","🔵","🔺"];
+  let odd=rand(0,3);
+  shapes[odd]="🔺";
+  options=shuffle(shapes);
+  a=options.findIndex(x=>x==="🔺").toString();
+  q="اكتشف الشكل المختلف عن باقي الأشكال";
+  h="ابحث عن الشكل الذي لا يشبه البقية";
+  mode="shape";category="👁️ أشكال";
  }
- return {q,answer,h};
+ return {q,a:String(a),h,options,mode,category};
+}
+
+function startGame(){
+ score=0;level=1;lives=3;streak=0;lastType="";
+ document.getElementById("startScreen").classList.add("hidden");
+ document.getElementById("endScreen").classList.add("hidden");
+ document.getElementById("game").style.display="block";
+ document.getElementById("hearts").textContent="❤️ ❤️ ❤️";
+ updateStats();newQuestion();
 }
 
 function newQuestion(){
- current=makePuzzle();
- hinted=false;time=settings[difficulty].time;
- document.getElementById("question").innerHTML=current.q;
- document.getElementById("answer").value="";
- document.getElementById("answer").disabled=false;
- document.getElementById("checkBtn").disabled=false;
- document.getElementById("hintBtn").disabled=false;
- document.getElementById("message").textContent="";
- document.getElementById("message").className="";
- locked=false;updateTimer();
  clearInterval(clock);
+ current=makeQuestion();locked=false;hinted=false;
+ time=Math.max(7,settings[difficulty].time-Math.floor((level-1)/5)*2);
+ document.getElementById("category").textContent=current.category;
+ document.getElementById("question").innerHTML=current.q;
+ document.getElementById("message").textContent="";
+ document.getElementById("explanation").textContent="";
+ document.getElementById("nextBtn").classList.add("hidden");
+ document.getElementById("hintBtn").disabled=false;
+ document.getElementById("choices").innerHTML="";
+ document.getElementById("inputArea").classList.add("hidden");
+
+ if(current.mode==="input"){
+  document.getElementById("inputArea").classList.remove("hidden");
+  document.getElementById("answer").value="";
+  document.getElementById("answer").focus();
+ }else{
+  document.getElementById("choices").innerHTML="";
+  current.options.forEach((option,i)=>{
+   let btn=document.createElement("button");
+   btn.className="choice";
+   btn.textContent=current.mode==="shape"?option:option;
+   btn.onclick=()=>checkChoice(i,option);
+   document.getElementById("choices").appendChild(btn);
+  });
+ }
+ updateTimer();
  clock=setInterval(()=>{
   if(locked)return;
   time--;updateTimer();
   if(time<=0)loseLife("انتهى الوقت! ⏰");
  },1000);
 }
+
 function updateTimer(){
  document.getElementById("timer").textContent=time;
- let deg=time/settings[difficulty].time*360;
+ let deg=time/Math.max(1,settings[difficulty].time)*360;
  document.getElementById("timerRing").style.background=
  `conic-gradient(${time<=5?"#ff5278":"#a56aff"} ${deg}deg,#ffffff20 0deg)`;
 }
-function checkAnswer(){
+
+function checkInput(){
  if(locked)return;
  let value=document.getElementById("answer").value.trim();
  if(value==="")return;
- if(Number(value)===current.answer){
-  locked=true;clearInterval(clock);streak++;
-  let points=10+level+(hinted?0:5);
-  score+=points;level++;
-  if(streak>=5){
-   difficulty=difficulty==="easy"?"medium":
-   difficulty==="medium"?"hard":
-   difficulty==="hard"?"impossible":"impossible";
-   streak=0;
-   document.getElementById("message").textContent="🔥 ممتاز! ارتفعت الصعوبة!";
-  }else{
-   document.getElementById("message").textContent=`🎉 إجابة صحيحة! +${points} نقطة`;
-  }
-  document.getElementById("message").className="good";
-  document.getElementById("answer").disabled=true;
-  document.getElementById("checkBtn").disabled=true;
-  document.getElementById("hintBtn").disabled=true;
-  updateStats();
-  setTimeout(newQuestion,1200);
- }else loseLife("إجابة غير صحيحة! ❌");
+ if(Number(value)===Number(current.a))correctAnswer();
+ else loseLife("إجابة غير صحيحة! ❌");
+}
+function checkChoice(i,option){
+ if(locked)return;
+ let correct=current.mode==="shape"?i===current.options.findIndex(x=>x==="🔺"):option===current.a;
+ if(correct){
+  document.querySelectorAll(".choice")[i].classList.add("correct");
+  correctAnswer();
+ }else{
+  document.querySelectorAll(".choice")[i].classList.add("wrong");
+  loseLife("اختيار غير صحيح! ❌");
+ }
+}
+function correctAnswer(){
+ if(locked)return;
+ locked=true;clearInterval(clock);
+ let points=10+level+(hinted?0:5);
+ score+=points;level++;streak++;
+ document.getElementById("message").textContent=`🎉 إجابة صحيحة! +${points} نقطة`;
+ document.getElementById("message").className="good";
+ document.getElementById("explanation").textContent=
+ `أحسنت! الإجابة الصحيحة: ${current.a}`;
+ document.getElementById("hintBtn").disabled=true;
+ document.getElementById("nextBtn").classList.remove("hidden");
+ document.getElementById("inputArea").classList.add("hidden");
+ updateStats();
+ document.querySelectorAll(".choice").forEach(b=>b.disabled=true);
 }
 function showHint(){
  if(locked||hinted)return;
@@ -225,6 +309,8 @@ function showHint(){
  document.getElementById("message").textContent="💡 "+current.h+" (خصم 5 نقاط)";
  updateStats();document.getElementById("hintBtn").disabled=true;
 }
+function nextQuestion(){newQuestion()}
+
 function loseLife(msg){
  if(locked)return;
  locked=true;clearInterval(clock);lives--;streak=0;
@@ -232,11 +318,19 @@ function loseLife(msg){
  "❤️ ".repeat(lives)+"🖤 ".repeat(3-lives);
  document.getElementById("message").textContent=msg;
  document.getElementById("message").className="bad";
- document.getElementById("answer").disabled=true;
- document.getElementById("checkBtn").disabled=true;
  document.getElementById("hintBtn").disabled=true;
- if(lives<=0)setTimeout(gameOver,900);
- else setTimeout(newQuestion,1200);
+ document.getElementById("explanation").textContent=
+ `الإجابة الصحيحة: ${current.a}`;
+ document.getElementById("nextBtn").classList.remove("hidden");
+ document.getElementById("inputArea").classList.add("hidden");
+ document.querySelectorAll(".choice").forEach(b=>b.disabled=true);
+ if(lives<=0){
+  document.getElementById("nextBtn").textContent="عرض النتيجة";
+  document.getElementById("nextBtn").onclick=gameOver;
+ }else{
+  document.getElementById("nextBtn").textContent="السؤال التالي ←";
+  document.getElementById("nextBtn").onclick=nextQuestion;
+ }
 }
 function updateStats(){
  document.getElementById("score").textContent=score;
@@ -247,27 +341,20 @@ function updateStats(){
  }
 }
 function gameOver(){
- document.getElementById("finalText").textContent=
- `نتيجتك ${score} نقطة، وصلت للمستوى ${level}. حاول تحطم رقمك القياسي!`;
- document.getElementById("endScreen").classList.remove("hidden");
-}
-function startGame(){
  clearInterval(clock);
- score=0;level=1;lives=3;streak=0;
- document.getElementById("startScreen").classList.add("hidden");
- document.getElementById("endScreen").classList.add("hidden");
- document.getElementById("game").style.display="block";
- document.getElementById("hearts").textContent="❤️ ❤️ ❤️";
- updateStats();newQuestion();
+ document.getElementById("finalText").textContent=
+ `جمعت ${score} نقطة ووصلت للمستوى ${level}. حاول تحطم رقمك القياسي!`;
+ document.getElementById("endScreen").classList.remove("hidden");
 }
 function backToMenu(){
  clearInterval(clock);locked=true;
  document.getElementById("endScreen").classList.add("hidden");
  document.getElementById("game").style.display="none";
  document.getElementById("startScreen").classList.remove("hidden");
+ document.getElementById("nextBtn").onclick=nextQuestion;
 }
 document.getElementById("answer").addEventListener("keydown",e=>{
- if(e.key==="Enter")checkAnswer();
+ if(e.key==="Enter")checkInput();
 });
 </script>
 </body>
