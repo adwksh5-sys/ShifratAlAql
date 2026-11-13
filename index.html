@@ -4,123 +4,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>شفرة العقل | تحدي الذكاء</title>
+<meta name="theme-color" content="#090b1c">
+<title>شفرة العقل 🧠</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;color:white;
- font-family:Arial,sans-serif;text-align:center;
- background:radial-gradient(ellipse at top,#24205a,#0a1024 65%,#050914);
- overflow-x:hidden
+ margin:0;min-height:100vh;background:#080b1b;color:white;
+ font-family:Arial,sans-serif;text-align:center;overflow-x:hidden
 }
-body:before,body:after{
- content:"";position:fixed;width:260px;height:260px;
- border-radius:50%;filter:blur(90px);opacity:.25;
- background:#8b45ff;z-index:-1;animation:float 8s infinite alternate
-}
-body:before{top:5%;right:-100px}
-body:after{bottom:5%;left:-100px;background:#00c9ff;animation-delay:2s}
-@keyframes float{to{transform:translate(50px,60px) scale(1.4)}}
-.container{width:min(460px,94%);margin:auto;padding:25px 0 40px}
-.logo{font-size:48px;animation:pulse 2s infinite}
-@keyframes pulse{50%{transform:scale(1.1);filter:drop-shadow(0 0 15px #a56aff)}}
-h1{font-size:30px;margin:8px;color:#d6b5ff;text-shadow:0 0 18px #914cff}
-.sub{color:#aeb8d8;font-size:14px}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.container{width:min(460px,94%);margin:auto;padding:20px 0 40px}
+.logo{font-size:55px;animation:glow 2s infinite alternate}
+@keyframes glow{to{transform:scale(1.13);filter:drop-shadow(0 0 20px #ae6aff)}}
+h1{color:#d3b2ff;text-shadow:0 0 20px #8e4dff;font-size:32px}
+.sub{color:#aab4d4;font-size:14px}
 .card{
- margin-top:22px;padding:22px 17px;border-radius:25px;
- background:linear-gradient(145deg,#1c2544dd,#10182ddd);
- border:1px solid #7863bd66;
- box-shadow:0 15px 45px #0008, inset 0 0 25px #7863bd12;
- backdrop-filter:blur(12px)
+ background:linear-gradient(145deg,#202849eF,#11182feF);
+ border:1px solid #7056a8;border-radius:23px;
+ padding:22px 16px;margin-top:20px;
+ box-shadow:0 12px 40px #0009,0 0 25px #8250ff22
 }
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{
- background:#0b1329;border:1px solid #38456b;
- border-radius:14px;padding:12px 4px;color:#b9c7eb;font-size:12px
-}
-.stat b{display:block;color:#d9baff;font-size:20px;margin-top:5px}
-#hearts{font-size:21px;letter-spacing:3px;margin:17px}
-.timer-wrap{
- width:85px;height:85px;margin:12px auto;
- border-radius:50%;padding:6px;
- background:conic-gradient(#a76aff 360deg,#ffffff20 0deg);
- box-shadow:0 0 22px #8e50ff55
-}
-.timer-inner{
- height:100%;border-radius:50%;background:#111a32;
- display:grid;place-items:center;font-size:27px;font-weight:bold
-}
-#question{
- min-height:100px;display:grid;place-items:center;
- font-size:25px;line-height:1.7;color:#fff;
- padding:12px 4px
-}
-#answer{
- width:100%;padding:16px;border-radius:14px;
- border:1px solid #7c66bc;background:#080f22;
- color:white;font-size:23px;text-align:center;outline:none
-}
-#answer:focus{border-color:#bd8aff;box-shadow:0 0 15px #9252ff66}
-button{
- border:0;border-radius:13px;padding:14px 18px;
- font-size:16px;font-weight:bold;cursor:pointer;
- transition:.2s; margin:6px
-}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.stat{background:#0a1228;border:1px solid #38466d;border-radius:13px;padding:10px 3px;font-size:12px;color:#b7c5e5}
+.stat b{display:block;color:#d4b0ff;font-size:20px;margin-top:5px}
+#hearts{margin:15px;font-size:23px;letter-spacing:4px}
+.timer{width:80px;height:80px;margin:15px auto;border-radius:50%;padding:6px;background:conic-gradient(#a56aff 360deg,#ffffff20 0deg);box-shadow:0 0 20px #9250ff55}
+.timer div{background:#10182e;height:100%;border-radius:50%;display:grid;place-items:center;font-size:27px;font-weight:bold}
+#question{min-height:95px;display:grid;place-items:center;font-size:25px;line-height:1.7;padding:10px}
+input{width:100%;padding:16px;border-radius:13px;border:1px solid #765cbb;background:#080e21;color:white;text-align:center;font-size:23px;outline:none}
+button{padding:14px 18px;margin:6px;border:0;border-radius:13px;font-size:16px;font-weight:bold;cursor:pointer;transition:.2s}
 button:active{transform:scale(.94)}
-.primary{background:linear-gradient(100deg,#8146e8,#b05cff);color:white;box-shadow:0 5px 20px #8744e855}
-.secondary{background:#263657;color:#dce6ff;border:1px solid #52658d}
-#message{min-height:30px;margin:14px 0 0;font-weight:bold}
-.good{color:#55ffc2;animation:pop .4s}
-.bad{color:#ff718e;animation:shake .3s}
+.primary{background:linear-gradient(110deg,#7642df,#bd65ff);color:white;box-shadow:0 5px 18px #8549e955}
+.secondary{background:#263653;color:#e1eaff}
+.diff{display:block;width:100%;margin:9px 0;border:1px solid #53618a;background:#172342;color:white}
+.diff.active{background:linear-gradient(90deg,#713fd2,#a354eb);border-color:#d6b4ff}
+#message{min-height:30px;margin-top:14px;font-weight:bold}
+.good{color:#50ffbd;animation:pop .4s}
+.bad{color:#ff7896;animation:shake .3s}
 @keyframes pop{50%{transform:scale(1.15)}}
 @keyframes shake{25%{transform:translateX(7px)}75%{transform:translateX(-7px)}}
-.footer{color:#7785a8;font-size:12px;margin-top:22px}
-.overlay{
- position:fixed;inset:0;background:#050914eF;
- display:grid;place-items:center;padding:20px;z-index:5
-}
-.panel{
- width:min(390px,100%);padding:30px 20px;
- border-radius:25px;background:#17213d;
- border:1px solid #8d6be0;box-shadow:0 0 50px #8046ff44
-}
-.panel h2{color:#d7b5ff;font-size:27px}
+.footer{font-size:12px;color:#7e8cad;margin-top:20px}
+.overlay{position:fixed;inset:0;background:#050817ed;display:grid;place-items:center;padding:18px;z-index:4;overflow-y:auto}
+.panel{width:min(390px,100%);padding:25px 20px;border-radius:25px;background:linear-gradient(145deg,#202849,#11172c);border:1px solid #9064d0;box-shadow:0 0 45px #8046ff44}
+.panel h2{color:#d9baff;font-size:27px}
 .hidden{display:none!important}
+#game{display:none}
 </style>
 </head>
 <body>
+<canvas id="stars"></canvas>
+
 <div class="container">
  <div class="logo">🧠</div>
  <h1>شفرة العقل</h1>
- <p class="sub">اختبر ذكاءك... وتحدى حدود عقلك ♾️</p>
+ <p class="sub">عقلك هو سلاحك... هل تستطيع الاستمرار؟</p>
 
- <div class="card">
-  <div class="stats">
-   <div class="stat">النقاط<b id="score">0</b></div>
-   <div class="stat">المستوى<b id="level">1</b></div>
-   <div class="stat">أفضل نتيجة<b id="best">0</b></div>
+ <div id="game">
+  <div class="card">
+   <div class="stats">
+    <div class="stat">النقاط<b id="score">0</b></div>
+    <div class="stat">المستوى<b id="level">1</b></div>
+    <div class="stat">أفضل نتيجة<b id="best">0</b></div>
+   </div>
+   <div id="hearts">❤️ ❤️ ❤️</div>
+   <div class="timer" id="timerRing"><div id="timer">20</div></div>
+   <div id="question"></div>
+   <input id="answer" type="number" inputmode="numeric" placeholder="اكتب الإجابة" disabled>
+   <br><br>
+   <button class="primary" id="checkBtn" onclick="checkAnswer()">تحقق من الإجابة</button>
+   <button class="secondary" id="hintBtn" onclick="showHint()">💡 تلميح</button>
+   <div id="message"></div>
   </div>
-  <div id="hearts">❤️ ❤️ ❤️</div>
-  <div class="timer-wrap" id="timerRing">
-   <div class="timer-inner" id="timer">20</div>
-  </div>
-  <div id="question">مستعد لاختبار عقلك؟</div>
-  <input id="answer" type="number" inputmode="numeric" placeholder="اكتب الإجابة هنا" disabled>
-  <div>
-   <button class="primary" id="checkBtn" onclick="checkAnswer()" disabled>تحقق من الإجابة</button>
-   <button class="secondary" id="hintBtn" onclick="showHint()" disabled>💡 تلميح</button>
-  </div>
-  <div id="message">ابدأ المغامرة الآن!</div>
+  <div class="footer">♾️ ألغاز متجددة بلا نهاية</div>
  </div>
- <div class="footer">كل إجابة تقربك من مستوى جديد ✨</div>
 </div>
 
 <div class="overlay" id="startScreen">
  <div class="panel">
   <div style="font-size:55px">🔐</div>
-  <h2>هل أنت مستعد؟</h2>
-  <p class="sub">ثلاث محاولات فقط... والألغاز لا تنتهي!</p>
-  <button class="primary" onclick="startGame()">ابدأ التحدي 🚀</button>
+  <h2>مرحباً بك في شفرة العقل</h2>
+  <p class="sub">اختر مستوى البداية واستعد للتحدي</p>
+  <button class="diff active" onclick="chooseDifficulty('easy',this)">🟢 سهل</button>
+  <button class="diff" onclick="chooseDifficulty('medium',this)">🟡 متوسط</button>
+  <button class="diff" onclick="chooseDifficulty('hard',this)">🔴 صعب</button>
+  <button class="diff" onclick="chooseDifficulty('impossible',this)">💀 مستحيل</button>
+  <button class="primary" onclick="startGame()">ابدأ المغامرة 🚀</button>
  </div>
 </div>
 
@@ -129,43 +97,74 @@ button:active{transform:scale(.94)}
   <div style="font-size:55px">🏆</div>
   <h2>انتهت المحاولات!</h2>
   <p class="sub" id="finalText"></p>
-  <button class="primary" onclick="startGame()">العب من جديد 🔥</button>
+  <button class="primary" onclick="backToMenu()">العب من جديد 🔥</button>
  </div>
 </div>
 
 <script>
+// خلفية النجوم المتحركة
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+let stars=[];
+function resize(){
+ canvas.width=innerWidth;canvas.height=innerHeight;
+ stars=Array.from({length:100},()=>({
+  x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+  r:Math.random()*2+.4,s:Math.random()*.6+.15
+ }));
+}
+resize();
+addEventListener("resize",resize);
+function animate(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ stars.forEach(s=>{
+  ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+  ctx.fillStyle="rgba(190,160,255,.8)";ctx.fill();
+  s.y-=s.s;if(s.y<0){s.y=canvas.height;s.x=Math.random()*canvas.width}
+ });
+ requestAnimationFrame(animate);
+}
+animate();
+
+// إعداد اللعبة
 let score=0,level=1,lives=3,time=20;
-let current=null,clock=null,locked=true,hinted=false;
+let difficulty="easy",current=null,clock=null;
+let locked=true,hinted=false,streak=0;
+const settings={
+ easy:{time:25,base:10},
+ medium:{time:20,base:30},
+ hard:{time:15,base:80},
+ impossible:{time:10,base:200}
+};
 let best=Number(localStorage.getItem("brainBest")||0);
 document.getElementById("best").textContent=best;
 
-function rand(min,max){
- return Math.floor(Math.random()*(max-min+1))+min;
+function chooseDifficulty(d,btn){
+ difficulty=d;
+ document.querySelectorAll(".diff").forEach(x=>x.classList.remove("active"));
+ btn.classList.add("active");
 }
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 
 function makePuzzle(){
+ let cfg=settings[difficulty];
+ let max=Math.min(cfg.base+level*3,5000);
  let type=rand(1,4),a,b,answer,q,h;
- let max=Math.min(10+level*3,1000);
-
  if(type===1){
   a=rand(2,max);b=rand(2,max);
-  answer=a+b;q=`🧩 ${a} + ${b} = ؟`;
-  h="اجمع العددين معاً";
+  answer=a+b;q=`🧩 ${a} + ${b} = ؟`;h="اجمع العددين";
  }else if(type===2){
   a=rand(2,max);b=rand(1,a);
-  answer=a-b;q=`🧩 ${a} - ${b} = ؟`;
-  h="اطرح العدد الأصغر من الأكبر";
+  answer=a-b;q=`🧩 ${a} - ${b} = ؟`;h="اطرح الأصغر من الأكبر";
  }else if(type===3){
-  a=rand(2,Math.min(9+level,50));
-  b=rand(2,Math.min(9+level,50));
-  answer=a*b;q=`🧩 ${a} × ${b} = ؟`;
-  h="فكر في جدول الضرب";
+  a=rand(2,Math.min(9+level,100));
+  b=rand(2,Math.min(9+level,100));
+  answer=a*b;q=`🧩 ${a} × ${b} = ؟`;h="فكر في جدول الضرب";
  }else{
-  let step=rand(2,Math.min(5+level,30));
+  let step=rand(2,Math.min(5+level,100));
   let first=rand(1,30);
-  let n=first+step*3;
-  answer=n+step;
-  q=`🔍 أكمل المتتالية:<br>${first} ، ${first+step} ، ${first+2*step} ، ${n} ، ؟`;
+  answer=first+step*4;
+  q=`🔍 أكمل المتتالية:<br>${first} ، ${first+step} ، ${first+step*2} ، ${first+step*3} ، ؟`;
   h="الفرق بين كل رقم والذي يليه ثابت";
  }
  return {q,answer,h};
@@ -173,102 +172,100 @@ function makePuzzle(){
 
 function newQuestion(){
  current=makePuzzle();
- hinted=false;time=20;
+ hinted=false;time=settings[difficulty].time;
  document.getElementById("question").innerHTML=current.q;
  document.getElementById("answer").value="";
- document.getElementById("message").textContent="";
- document.getElementById("message").className="";
- document.getElementById("hintBtn").disabled=false;
  document.getElementById("answer").disabled=false;
  document.getElementById("checkBtn").disabled=false;
- document.getElementById("answer").focus();
+ document.getElementById("hintBtn").disabled=false;
+ document.getElementById("message").textContent="";
+ document.getElementById("message").className="";
  locked=false;updateTimer();
  clearInterval(clock);
  clock=setInterval(()=>{
   if(locked)return;
   time--;updateTimer();
-  if(time<=0){loseLife("انتهى الوقت! ⏰");}
+  if(time<=0)loseLife("انتهى الوقت! ⏰");
  },1000);
 }
-
 function updateTimer(){
  document.getElementById("timer").textContent=time;
- let deg=time/20*360;
+ let deg=time/settings[difficulty].time*360;
  document.getElementById("timerRing").style.background=
- `conic-gradient(${time<=5?"#ff5278":"#a76aff"} ${deg}deg,#ffffff20 0deg)`;
+ `conic-gradient(${time<=5?"#ff5278":"#a56aff"} ${deg}deg,#ffffff20 0deg)`;
 }
-
 function checkAnswer(){
  if(locked)return;
  let value=document.getElementById("answer").value.trim();
  if(value==="")return;
  if(Number(value)===current.answer){
-  locked=true;clearInterval(clock);
+  locked=true;clearInterval(clock);streak++;
   let points=10+level+(hinted?0:5);
-  score+=points;
-  level++;
-  document.getElementById("message").textContent=`🎉 إجابة صحيحة! +${points} نقطة`;
+  score+=points;level++;
+  if(streak>=5){
+   difficulty=difficulty==="easy"?"medium":
+   difficulty==="medium"?"hard":
+   difficulty==="hard"?"impossible":"impossible";
+   streak=0;
+   document.getElementById("message").textContent="🔥 ممتاز! ارتفعت الصعوبة!";
+  }else{
+   document.getElementById("message").textContent=`🎉 إجابة صحيحة! +${points} نقطة`;
+  }
   document.getElementById("message").className="good";
   document.getElementById("answer").disabled=true;
   document.getElementById("checkBtn").disabled=true;
+  document.getElementById("hintBtn").disabled=true;
   updateStats();
-  setTimeout(newQuestion,1100);
- }else{
-  loseLife("إجابة غير صحيحة! حاول مرة أخرى");
- }
+  setTimeout(newQuestion,1200);
+ }else loseLife("إجابة غير صحيحة! ❌");
 }
-
 function showHint(){
  if(locked||hinted)return;
  hinted=true;score=Math.max(0,score-5);
  document.getElementById("message").textContent="💡 "+current.h+" (خصم 5 نقاط)";
- updateStats();
- document.getElementById("hintBtn").disabled=true;
+ updateStats();document.getElementById("hintBtn").disabled=true;
 }
-
-function loseLife(message){
+function loseLife(msg){
  if(locked)return;
- locked=true;clearInterval(clock);
- lives--;
+ locked=true;clearInterval(clock);lives--;streak=0;
  document.getElementById("hearts").textContent=
  "❤️ ".repeat(lives)+"🖤 ".repeat(3-lives);
- document.getElementById("message").textContent=message;
+ document.getElementById("message").textContent=msg;
  document.getElementById("message").className="bad";
  document.getElementById("answer").disabled=true;
  document.getElementById("checkBtn").disabled=true;
  document.getElementById("hintBtn").disabled=true;
- if(lives<=0){
-  setTimeout(gameOver,900);
- }else{
-  setTimeout(newQuestion,1300);
- }
+ if(lives<=0)setTimeout(gameOver,900);
+ else setTimeout(newQuestion,1200);
 }
-
 function updateStats(){
  document.getElementById("score").textContent=score;
  document.getElementById("level").textContent=level;
  if(score>best){
-  best=score;
-  localStorage.setItem("brainBest",best);
+  best=score;localStorage.setItem("brainBest",best);
   document.getElementById("best").textContent=best;
  }
 }
-
 function gameOver(){
  document.getElementById("finalText").textContent=
- `وصلت للمستوى ${level} وجمعت ${score} نقطة. حاول تحطم رقمك القياسي!`;
+ `نتيجتك ${score} نقطة، وصلت للمستوى ${level}. حاول تحطم رقمك القياسي!`;
  document.getElementById("endScreen").classList.remove("hidden");
 }
-
 function startGame(){
  clearInterval(clock);
- score=0;level=1;lives=3;
+ score=0;level=1;lives=3;streak=0;
  document.getElementById("startScreen").classList.add("hidden");
  document.getElementById("endScreen").classList.add("hidden");
+ document.getElementById("game").style.display="block";
  document.getElementById("hearts").textContent="❤️ ❤️ ❤️";
  updateStats();newQuestion();
 }
-
+function backToMenu(){
+ clearInterval(clock);locked=true;
+ document.getElementById("endScreen").classList.add("hidden");
+ document.getElementById("game").style.display="none";
+ document.getElementById("startScreen").classList.remove("hidden");
+}
 document.getElementById("answer").addEventListener("keydown",e=>{
  if(e.key==="Enter")checkAnswer();
 });
