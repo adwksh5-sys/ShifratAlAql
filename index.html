@@ -3,136 +3,275 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شفرة العقل 🧠</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>شفرة العقل | تحدي الذكاء</title>
 <style>
 *{box-sizing:border-box}
 body{
-margin:0;background:#090d1b;color:white;
-font-family:Arial,sans-serif;text-align:center;
-min-height:100vh;padding:25px 15px;
+ margin:0;min-height:100vh;color:white;
+ font-family:Arial,sans-serif;text-align:center;
+ background:radial-gradient(ellipse at top,#24205a,#0a1024 65%,#050914);
+ overflow-x:hidden
 }
-.container{max-width:480px;margin:auto}
-h1{color:#bd83ff;font-size:34px}
-.sub{color:#9da8c5}
+body:before,body:after{
+ content:"";position:fixed;width:260px;height:260px;
+ border-radius:50%;filter:blur(90px);opacity:.25;
+ background:#8b45ff;z-index:-1;animation:float 8s infinite alternate
+}
+body:before{top:5%;right:-100px}
+body:after{bottom:5%;left:-100px;background:#00c9ff;animation-delay:2s}
+@keyframes float{to{transform:translate(50px,60px) scale(1.4)}}
+.container{width:min(460px,94%);margin:auto;padding:25px 0 40px}
+.logo{font-size:48px;animation:pulse 2s infinite}
+@keyframes pulse{50%{transform:scale(1.1);filter:drop-shadow(0 0 15px #a56aff)}}
+h1{font-size:30px;margin:8px;color:#d6b5ff;text-shadow:0 0 18px #914cff}
+.sub{color:#aeb8d8;font-size:14px}
 .card{
-background:#151c32;border:1px solid #303b60;
-border-radius:22px;padding:25px;margin-top:22px;
-box-shadow:0 10px 35px #0006
+ margin-top:22px;padding:22px 17px;border-radius:25px;
+ background:linear-gradient(145deg,#1c2544dd,#10182ddd);
+ border:1px solid #7863bd66;
+ box-shadow:0 15px 45px #0008, inset 0 0 25px #7863bd12;
+ backdrop-filter:blur(12px)
 }
-.stats{display:flex;justify-content:space-around;
-color:#bda0ff;font-weight:bold}
-#question{font-size:24px;margin:30px 0;line-height:1.7}
-input{
-width:100%;padding:16px;border-radius:12px;
-border:1px solid #59658a;background:#0c1326;
-color:white;font-size:20px;text-align:center;
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{
+ background:#0b1329;border:1px solid #38456b;
+ border-radius:14px;padding:12px 4px;color:#b9c7eb;font-size:12px
 }
+.stat b{display:block;color:#d9baff;font-size:20px;margin-top:5px}
+#hearts{font-size:21px;letter-spacing:3px;margin:17px}
+.timer-wrap{
+ width:85px;height:85px;margin:12px auto;
+ border-radius:50%;padding:6px;
+ background:conic-gradient(#a76aff 360deg,#ffffff20 0deg);
+ box-shadow:0 0 22px #8e50ff55
+}
+.timer-inner{
+ height:100%;border-radius:50%;background:#111a32;
+ display:grid;place-items:center;font-size:27px;font-weight:bold
+}
+#question{
+ min-height:100px;display:grid;place-items:center;
+ font-size:25px;line-height:1.7;color:#fff;
+ padding:12px 4px
+}
+#answer{
+ width:100%;padding:16px;border-radius:14px;
+ border:1px solid #7c66bc;background:#080f22;
+ color:white;font-size:23px;text-align:center;outline:none
+}
+#answer:focus{border-color:#bd8aff;box-shadow:0 0 15px #9252ff66}
 button{
-border:0;border-radius:12px;padding:14px;
-font-size:17px;font-weight:bold;cursor:pointer;
-margin:7px;background:#9660ed;color:white;
+ border:0;border-radius:13px;padding:14px 18px;
+ font-size:16px;font-weight:bold;cursor:pointer;
+ transition:.2s; margin:6px
 }
-button:active{transform:scale(.96)}
-.secondary{background:#273453}
-#message{min-height:30px;margin:15px;color:#ffd47a}
+button:active{transform:scale(.94)}
+.primary{background:linear-gradient(100deg,#8146e8,#b05cff);color:white;box-shadow:0 5px 20px #8744e855}
+.secondary{background:#263657;color:#dce6ff;border:1px solid #52658d}
+#message{min-height:30px;margin:14px 0 0;font-weight:bold}
+.good{color:#55ffc2;animation:pop .4s}
+.bad{color:#ff718e;animation:shake .3s}
+@keyframes pop{50%{transform:scale(1.15)}}
+@keyframes shake{25%{transform:translateX(7px)}75%{transform:translateX(-7px)}}
+.footer{color:#7785a8;font-size:12px;margin-top:22px}
+.overlay{
+ position:fixed;inset:0;background:#050914eF;
+ display:grid;place-items:center;padding:20px;z-index:5
+}
+.panel{
+ width:min(390px,100%);padding:30px 20px;
+ border-radius:25px;background:#17213d;
+ border:1px solid #8d6be0;box-shadow:0 0 50px #8046ff44
+}
+.panel h2{color:#d7b5ff;font-size:27px}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>🧠 شفرة العقل</h1>
-<p class="sub">اختبر ذكاءك... هل تستطيع الوصول إلى النهاية؟</p>
+ <div class="logo">🧠</div>
+ <h1>شفرة العقل</h1>
+ <p class="sub">اختبر ذكاءك... وتحدى حدود عقلك ♾️</p>
 
-<div class="card">
-<div class="stats">
-<span>🏆 النقاط: <b id="score">0</b></span>
-<span>🔥 المستوى: <b id="level">1</b></span>
+ <div class="card">
+  <div class="stats">
+   <div class="stat">النقاط<b id="score">0</b></div>
+   <div class="stat">المستوى<b id="level">1</b></div>
+   <div class="stat">أفضل نتيجة<b id="best">0</b></div>
+  </div>
+  <div id="hearts">❤️ ❤️ ❤️</div>
+  <div class="timer-wrap" id="timerRing">
+   <div class="timer-inner" id="timer">20</div>
+  </div>
+  <div id="question">مستعد لاختبار عقلك؟</div>
+  <input id="answer" type="number" inputmode="numeric" placeholder="اكتب الإجابة هنا" disabled>
+  <div>
+   <button class="primary" id="checkBtn" onclick="checkAnswer()" disabled>تحقق من الإجابة</button>
+   <button class="secondary" id="hintBtn" onclick="showHint()" disabled>💡 تلميح</button>
+  </div>
+  <div id="message">ابدأ المغامرة الآن!</div>
+ </div>
+ <div class="footer">كل إجابة تقربك من مستوى جديد ✨</div>
 </div>
 
-<div id="question">استعد للتحدي!</div>
-
-<input id="answer" placeholder="اكتب إجابتك هنا">
-
-<br><br>
-<button onclick="check()">تحقق من الإجابة</button>
-<button class="secondary" onclick="hint()">💡 تلميح</button>
-
-<div id="message"></div>
+<div class="overlay" id="startScreen">
+ <div class="panel">
+  <div style="font-size:55px">🔐</div>
+  <h2>هل أنت مستعد؟</h2>
+  <p class="sub">ثلاث محاولات فقط... والألغاز لا تنتهي!</p>
+  <button class="primary" onclick="startGame()">ابدأ التحدي 🚀</button>
+ </div>
 </div>
 
-<p class="sub">♾️ تحديات متجددة بلا نهاية</p>
+<div class="overlay hidden" id="endScreen">
+ <div class="panel">
+  <div style="font-size:55px">🏆</div>
+  <h2>انتهت المحاولات!</h2>
+  <p class="sub" id="finalText"></p>
+  <button class="primary" onclick="startGame()">العب من جديد 🔥</button>
+ </div>
 </div>
 
 <script>
-let score=0,level=1,current,used=0;
+let score=0,level=1,lives=3,time=20;
+let current=null,clock=null,locked=true,hinted=false;
+let best=Number(localStorage.getItem("brainBest")||0);
+document.getElementById("best").textContent=best;
 
-function generate(){
-let type=Math.floor(Math.random()*4);
-let a,b,answer,q,h;
-
-if(type===0){
-a=Math.floor(Math.random()*10)+level;
-b=Math.floor(Math.random()*10)+1;
-answer=a+b;
-q=`ما ناتج ${a} + ${b} ؟`;
-h="اجمع الرقمين معاً";
-}
-else if(type===1){
-a=Math.floor(Math.random()*10)+level;
-b=Math.floor(Math.random()*10)+1;
-answer=a-b;
-q=`ما ناتج ${a} - ${b} ؟`;
-h="اطرح الرقم الأصغر من الأكبر";
-}
-else if(type===2){
-a=Math.floor(Math.random()*9)+1;
-b=Math.floor(Math.random()*9)+1;
-answer=a*b;
-q=`ما ناتج ${a} × ${b} ؟`;
-h="فكر في جدول الضرب";
-}
-else{
-a=Math.floor(Math.random()*10)+1;
-answer=a*2+2;
-q=`إذا كان 2 + 2 = 4، فما ناتج ${a} + ${a} + 2 ؟`;
-answer=2*a+2;
-h="اجمع العدد مرتين ثم أضف 2";
+function rand(min,max){
+ return Math.floor(Math.random()*(max-min+1))+min;
 }
 
-current={answer,q,h};
-document.getElementById("question").textContent=q;
-document.getElementById("answer").value="";
-document.getElementById("message").textContent="";
-used=0;
+function makePuzzle(){
+ let type=rand(1,4),a,b,answer,q,h;
+ let max=Math.min(10+level*3,1000);
+
+ if(type===1){
+  a=rand(2,max);b=rand(2,max);
+  answer=a+b;q=`🧩 ${a} + ${b} = ؟`;
+  h="اجمع العددين معاً";
+ }else if(type===2){
+  a=rand(2,max);b=rand(1,a);
+  answer=a-b;q=`🧩 ${a} - ${b} = ؟`;
+  h="اطرح العدد الأصغر من الأكبر";
+ }else if(type===3){
+  a=rand(2,Math.min(9+level,50));
+  b=rand(2,Math.min(9+level,50));
+  answer=a*b;q=`🧩 ${a} × ${b} = ؟`;
+  h="فكر في جدول الضرب";
+ }else{
+  let step=rand(2,Math.min(5+level,30));
+  let first=rand(1,30);
+  let n=first+step*3;
+  answer=n+step;
+  q=`🔍 أكمل المتتالية:<br>${first} ، ${first+step} ، ${first+2*step} ، ${n} ، ؟`;
+  h="الفرق بين كل رقم والذي يليه ثابت";
+ }
+ return {q,answer,h};
 }
 
-function check(){
-let val=document.getElementById("answer").value.trim();
-if(val==="")return;
-if(Number(val)===current.answer){
-score+=10+level;
-level++;
-document.getElementById("message").textContent="🎉 إجابة صحيحة! أحسنت";
-}else{
-document.getElementById("message").textContent="❌ حاول مرة أخرى!";
-return;
-}
-update();
-setTimeout(generate,900);
-}
-
-function hint(){
-if(used)return;
-document.getElementById("message").textContent="💡 "+current.h;
-used=1;
-}
-
-function update(){
-document.getElementById("score").textContent=score;
-document.getElementById("level").textContent=level;
+function newQuestion(){
+ current=makePuzzle();
+ hinted=false;time=20;
+ document.getElementById("question").innerHTML=current.q;
+ document.getElementById("answer").value="";
+ document.getElementById("message").textContent="";
+ document.getElementById("message").className="";
+ document.getElementById("hintBtn").disabled=false;
+ document.getElementById("answer").disabled=false;
+ document.getElementById("checkBtn").disabled=false;
+ document.getElementById("answer").focus();
+ locked=false;updateTimer();
+ clearInterval(clock);
+ clock=setInterval(()=>{
+  if(locked)return;
+  time--;updateTimer();
+  if(time<=0){loseLife("انتهى الوقت! ⏰");}
+ },1000);
 }
 
-generate();
+function updateTimer(){
+ document.getElementById("timer").textContent=time;
+ let deg=time/20*360;
+ document.getElementById("timerRing").style.background=
+ `conic-gradient(${time<=5?"#ff5278":"#a76aff"} ${deg}deg,#ffffff20 0deg)`;
+}
+
+function checkAnswer(){
+ if(locked)return;
+ let value=document.getElementById("answer").value.trim();
+ if(value==="")return;
+ if(Number(value)===current.answer){
+  locked=true;clearInterval(clock);
+  let points=10+level+(hinted?0:5);
+  score+=points;
+  level++;
+  document.getElementById("message").textContent=`🎉 إجابة صحيحة! +${points} نقطة`;
+  document.getElementById("message").className="good";
+  document.getElementById("answer").disabled=true;
+  document.getElementById("checkBtn").disabled=true;
+  updateStats();
+  setTimeout(newQuestion,1100);
+ }else{
+  loseLife("إجابة غير صحيحة! حاول مرة أخرى");
+ }
+}
+
+function showHint(){
+ if(locked||hinted)return;
+ hinted=true;score=Math.max(0,score-5);
+ document.getElementById("message").textContent="💡 "+current.h+" (خصم 5 نقاط)";
+ updateStats();
+ document.getElementById("hintBtn").disabled=true;
+}
+
+function loseLife(message){
+ if(locked)return;
+ locked=true;clearInterval(clock);
+ lives--;
+ document.getElementById("hearts").textContent=
+ "❤️ ".repeat(lives)+"🖤 ".repeat(3-lives);
+ document.getElementById("message").textContent=message;
+ document.getElementById("message").className="bad";
+ document.getElementById("answer").disabled=true;
+ document.getElementById("checkBtn").disabled=true;
+ document.getElementById("hintBtn").disabled=true;
+ if(lives<=0){
+  setTimeout(gameOver,900);
+ }else{
+  setTimeout(newQuestion,1300);
+ }
+}
+
+function updateStats(){
+ document.getElementById("score").textContent=score;
+ document.getElementById("level").textContent=level;
+ if(score>best){
+  best=score;
+  localStorage.setItem("brainBest",best);
+  document.getElementById("best").textContent=best;
+ }
+}
+
+function gameOver(){
+ document.getElementById("finalText").textContent=
+ `وصلت للمستوى ${level} وجمعت ${score} نقطة. حاول تحطم رقمك القياسي!`;
+ document.getElementById("endScreen").classList.remove("hidden");
+}
+
+function startGame(){
+ clearInterval(clock);
+ score=0;level=1;lives=3;
+ document.getElementById("startScreen").classList.add("hidden");
+ document.getElementById("endScreen").classList.add("hidden");
+ document.getElementById("hearts").textContent="❤️ ❤️ ❤️";
+ updateStats();newQuestion();
+}
+
+document.getElementById("answer").addEventListener("keydown",e=>{
+ if(e.key==="Enter")checkAnswer();
+});
 </script>
 </body>
 </html>
