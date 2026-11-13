@@ -4,57 +4,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#10152e">
-<title>شفرة العقل - المغامرة الأسطورية</title>
+<title>شفرة العقل 🧠</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#10152e;color:white;font-family:Tahoma,Arial;overflow:hidden}
-#game{width:100%;height:100dvh;display:flex;flex-direction:column;background:linear-gradient(#10152e,#202b50)}
-header{height:55px;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:#10152eee}
-header b{color:#ffd166}
-#stage{position:relative;flex:1;min-height:0;overflow:hidden}
+body{margin:0;background:#10152e;color:white;font-family:Tahoma;overflow:hidden}
+#game{height:100dvh;display:flex;flex-direction:column;background:linear-gradient(#171c43,#39245c)}
+header{padding:14px;display:flex;justify-content:space-between;background:#10152eee;color:#ffd166;font-weight:bold}
+#stage{position:relative;flex:1;min-height:0}
 canvas{width:100%;height:100%;display:block}
-.panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#080d20c9;padding:20px}
-.box{width:min(440px,100%);background:linear-gradient(145deg,#25365f,#151d3d);border:2px solid #6d8dca;border-radius:24px;padding:24px;text-align:center;box-shadow:0 15px 50px #0009}
-h1{color:#ffd166;margin:5px 0 12px;font-size:30px}
-h2{color:#ffe09a}
-p{line-height:1.8}
-button{border:0;border-radius:14px;padding:13px 20px;font-size:16px;font-weight:bold;background:#ffd166;color:#20213a;cursor:pointer;margin:5px}
-button:active{transform:scale(.96)}
-.answer{display:block;width:100%;background:#354b7a;color:white;border:1px solid #7895c7}
-.answer:hover{background:#536eaa}
-#controls{height:90px;display:flex;justify-content:space-around;align-items:center;background:#111a35;padding:8px}
-.control{width:65px;height:60px;border-radius:18px;background:#334c7d;color:white;font-size:26px;touch-action:none}
-#hint{font-size:12px;color:#b9c9e9;text-align:center;padding:5px}
+.panel{position:absolute;inset:0;background:#090d20d9;display:flex;align-items:center;justify-content:center;padding:15px}
 .hidden{display:none!important}
-#toast{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:#10182c;padding:10px 16px;border-radius:20px;display:none;z-index:5}
+.box{width:min(430px,100%);background:linear-gradient(145deg,#334879,#171e42);border:2px solid #a1b9ff;border-radius:25px;padding:22px;text-align:center;box-shadow:0 10px 40px #0008}
+h1{color:#ffd166;font-size:30px}
+p{line-height:1.8}
+button{border:0;border-radius:14px;padding:13px 18px;margin:5px;font-size:16px;font-weight:bold;background:#ffd166;color:#222747}
+.answer{display:block;width:100%;background:#536a9c;color:white}
+.answer:active,button:active{transform:scale(.96)}
+#controls{height:82px;display:flex;justify-content:space-around;align-items:center;background:#111a35}
+.control{width:75px;height:62px;background:#344d7e;color:white;font-size:27px;touch-action:none}
+#hint{text-align:center;font-size:12px;padding:6px;color:#d5dfff}
 </style>
 </head>
 <body>
 <div id="game">
 <header>
-<b>🧠 شفرة العقل</b>
-<span id="levelText">المرحلة 1</span>
-<span id="scoreText">⭐ 0</span>
+<span>🧠 شفرة العقل</span>
+<span id="level">المرحلة 1</span>
+<span id="score">⭐ 0</span>
 </header>
+
 <div id="stage">
 <canvas id="world"></canvas>
-<div id="toast"></div>
 
 <div class="panel" id="start">
 <div class="box">
-<div style="font-size:65px">🏰</div>
+<div style="font-size:75px">👧🏻</div>
 <h1>شفرة العقل</h1>
-<h2>المغامرة الأسطورية</h2>
-<p>عالم غامض مليء بالأسرار والأبواب المقفولة.<br>ساعد آدم وزيرو ولونا في كشف الحقيقة!</p>
-<button onclick="startGame()">ابدأ المغامرة 🚀</button>
+<h2>مغامرة لونا السحرية</h2>
+<p>ساعد لونا في اكتشاف الأسرار وحل الألغاز وفتح أبواب القصر!</p>
+<p>اختر مستوى الصعوبة:</p>
+<button onclick="difficulty='easy';start()">سهل 🌱</button>
+<button onclick="difficulty='medium';start()">متوسط ⚡</button>
+<button onclick="difficulty='hard';start()">صعب 🔥</button>
 </div>
 </div>
 
-<div class="panel hidden" id="puzzle">
+<div class="panel hidden" id="quiz">
 <div class="box">
-<div style="font-size:40px">🔐</div>
-<h2 id="puzzleTitle">لغز جديد</h2>
+<div style="font-size:45px">💬👧🏻</div>
+<h2 id="qtitle">لونا تسألك</h2>
 <p id="question"></p>
 <div id="answers"></div>
 <p id="feedback"></p>
@@ -63,23 +61,26 @@ button:active{transform:scale(.96)}
 
 <div class="panel hidden" id="win">
 <div class="box">
-<div style="font-size:65px">🏆</div>
-<h1>أحسنت!</h1>
-<p>حلّيت اللغز وفتحت الطريق للعالم الجديد.</p>
-<button onclick="nextLevel()">استكشف المرحلة التالية</button>
+<div style="font-size:75px">🏆</div>
+<h1>أنت عبقري!</h1>
+<p>لونا سعيدة جداً! لقد نجحت في حل اللغز.</p>
+<button onclick="next()">المرحلة التالية 🚀</button>
 </div>
 </div>
 
 <div class="panel hidden" id="lose">
 <div class="box">
-<div style="font-size:60px">💔</div>
-<h1>انتهت المحاولة!</h1>
-<p>لا تستسلم، المحقق الحقيقي بيحاول تاني.</p>
-<button onclick="retry()">حاول مرة أخرى</button>
+<div style="font-size:70px">😢</div>
+<h1>انتهت المحاولة</h1>
+<p>لونا تنتظر منك المحاولة مرة أخرى!</p>
+<button onclick="retry()">حاول مجدداً ❤️</button>
+<button onclick="location.reload()">القائمة الرئيسية</button>
 </div>
 </div>
 </div>
-<div id="hint">تحرك حتى تصل إلى البوابة 🔮</div>
+
+<div id="hint">حرّك لونا حتى تصل إلى البوابة 🔮</div>
+
 <div id="controls">
 <button class="control" id="right">◀</button>
 <button class="control" id="jump">⬆</button>
@@ -90,186 +91,312 @@ button:active{transform:scale(.96)}
 <script>
 const canvas=document.getElementById("world");
 const ctx=canvas.getContext("2d");
-let W=900,H=500,player={x:90,y:0,v:0,ground:true,dir:1};
-let camera=0,score=0,level=1,lives=3,playing=false,frame=0;
-let keys={left:false,right:false};
-let puzzleOpen=false,solved=false;
 
-const puzzles=[
-{title:"سر الغرفة المغلقة",q:"وجد آدم رسالة تقول: «أملك مفاتيح كثيرة، لكني لا أفتح أي باب». ما أنا؟",a:["البيانو","الحارس","الخريطة"],correct:0},
-{title:"تحقيق في القصر",q:"دخل اللص الغرفة من النافذة، لكن الأرض تحتها مليئة بالثلج ولم تترك قدماه أي أثر. كيف؟",a:["كان يطير","النافذة مرسومة","دخل من الباب"],correct:1},
-{title:"شفرة زيرو",q:"رسالة غامضة تقول: «كلما أخذت مني كبرت». ما المقصود؟",a:["الحفرة","الشمعة","الظل"],correct:0},
-{title:"شهادة الشاهد",q:"ثلاثة أشخاص رأوا الحادث. الأول كاذب دائمًا، والثاني صادق دائمًا، والثالث لا تعرفه. من نحتاج لسؤاله بسؤال واحد؟",a:["الكاذب","الصادق","لا يمكن تحديده دون دليل إضافي"],correct:2},
-{title:"باب الساحرة",q:"شيء له وجه ويدان لكنه لا يملك عينين ولا أصابع. ما هو؟",a:["الساعة","التمثال","الكتاب"],correct:0}
+let W=900,H=500;
+let player={x:100,y:350,v:0,ground:true};
+let score=0,level=1,lives=3;
+let playing=false,quizOpen=false;
+let keys={left:false,right:false};
+let frame=0,difficulty="easy";
+let solved=false;
+
+const questions=[
+{q:"شيء كلما أخذت منه كبر، ما هو؟",a:["الحفرة","الكتاب","الشجرة"],c:0,type:"ذكاء"},
+{q:"كم يساوي 7 × 8 ؟",a:["54","56","64"],c:1,type:"حساب"},
+{q:"ما عاصمة مصر؟",a:["القاهرة","الإسكندرية","الأقصر"],c:0,type:"معلومات"},
+{q:"ما الشيء الذي له أسنان ولا يعض؟",a:["الأسد","المشط","الكلب"],c:1,type:"ألغاز"},
+{q:"كم عدد أيام الأسبوع؟",a:["5","6","7"],c:2,type:"معلومات"},
+{q:"ما ناتج 100 ÷ 4 ؟",a:["20","25","40"],c:1,type:"حساب"},
+{q:"ما الحيوان المعروف بسفينة الصحراء؟",a:["الجمل","الحصان","الفيل"],c:0,type:"معلومات"},
+{q:"له عين واحدة ولا يرى، ما هو؟",a:["الإبرة","المرآة","القلم"],c:0,type:"ألغاز"},
+{q:"كم يساوي 15 + 27 ؟",a:["32","42","52"],c:1,type:"حساب"},
+{q:"ما الكوكب الأحمر؟",a:["الأرض","المريخ","الزهرة"],c:1,type:"علوم"},
+{q:"ما الشيء الذي يمشي بلا أرجل؟",a:["الساعة","الماء","الكرسي"],c:1,type:"ألغاز"},
+{q:"كم عدد قارات العالم؟",a:["5","6","7"],c:2,type:"معلومات"}
 ];
+
+let used=[];
 
 function resize(){
 let r=canvas.getBoundingClientRect();
-canvas.width=Math.max(1,Math.floor(r.width*devicePixelRatio));
-canvas.height=Math.max(1,Math.floor(r.height*devicePixelRatio));
+canvas.width=r.width*devicePixelRatio;
+canvas.height=r.height*devicePixelRatio;
 ctx.setTransform(canvas.width/900,0,0,canvas.height/500,0,0);
 }
-window.addEventListener("resize",resize);resize();
+window.addEventListener("resize",resize);
+resize();
 
-function rounded(x,y,w,h,r,color){
-ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();
+function drawGirl(x,y){
+ctx.save();
+ctx.translate(x,y);
+let walk=Math.sin(frame*.18)*(keys.left||keys.right?5:1);
+
+// الشعر
+ctx.fillStyle="#542c27";
+ctx.beginPath();
+ctx.arc(0,-42,25,0,Math.PI*2);
+ctx.fill();
+
+// الوجه
+ctx.fillStyle="#ffcfaa";
+ctx.beginPath();
+ctx.arc(0,-40,18,0,Math.PI*2);
+ctx.fill();
+
+// الشعر الطويل
+ctx.fillStyle="#542c27";
+ctx.fillRect(-23,-48,9,55);
+ctx.fillRect(14,-48,9,55);
+
+// العين
+ctx.fillStyle="#252039";
+ctx.beginPath();
+ctx.arc(-7,-42,2,0,7);
+ctx.arc(7,-42,2,0,7);
+ctx.fill();
+
+// الفم
+ctx.strokeStyle="#b74d59";
+ctx.lineWidth=2;
+ctx.beginPath();
+ctx.arc(0,-35,5,0,Math.PI);
+ctx.stroke();
+
+// الفستان
+ctx.fillStyle="#ff6fa8";
+ctx.beginPath();
+ctx.moveTo(-13,-20);
+ctx.lineTo(13,-20);
+ctx.lineTo(22,17);
+ctx.lineTo(-22,17);
+ctx.fill();
+
+// الأقدام
+ctx.strokeStyle="#ffcfaa";
+ctx.lineWidth=5;
+ctx.beginPath();
+ctx.moveTo(-7,15);
+ctx.lineTo(-8+walk,27);
+ctx.moveTo(7,15);
+ctx.lineTo(8-walk,27);
+ctx.stroke();
+
+ctx.restore();
 }
-function text(t,x,y,size,color="#fff"){
-ctx.fillStyle=color;ctx.font="bold "+size+"px Tahoma";ctx.textAlign="center";ctx.fillText(t,x,y);
-}
-function background(){
+
+function draw(){
+ctx.clearRect(0,0,900,500);
+
 let g=ctx.createLinearGradient(0,0,0,500);
-g.addColorStop(0,level%2?"#18264c":"#251c48");
-g.addColorStop(1,level%2?"#42618a":"#593e76");
-ctx.fillStyle=g;ctx.fillRect(0,0,900,500);
+g.addColorStop(0,level%2?"#17234d":"#34214d");
+g.addColorStop(1,level%2?"#5576a3":"#79518c");
+ctx.fillStyle=g;
+ctx.fillRect(0,0,900,500);
+
+// نجوم
 for(let i=0;i<45;i++){
-let x=((i*137-camera*.15)%1000+1000)%1000;
+let x=(i*137+frame*.15)%900;
 let y=(i*71)%300;
-ctx.fillStyle="#ffffff66";ctx.beginPath();ctx.arc(x,y,(i%3)+1,0,Math.PI*2);ctx.fill();
+ctx.fillStyle="#ffffff99";
+ctx.beginPath();
+ctx.arc(x,y,2,0,7);
+ctx.fill();
 }
-for(let i=0;i<7;i++){
-let x=i*180-camera*.3%180;
-ctx.fillStyle="#101b3c";
-ctx.beginPath();ctx.moveTo(x,390);ctx.lineTo(x+65,210+(i%3)*30);ctx.lineTo(x+130,390);ctx.fill();
+
+// أرض
+ctx.fillStyle="#273a49";
+ctx.fillRect(0,390,900,110);
+
+// أرضية
+ctx.fillStyle="#60815c";
+ctx.fillRect(0,390,900,12);
+
+// قصر
+ctx.fillStyle="#69518f";
+ctx.fillRect(660,235,170,155);
+ctx.fillStyle="#ffd166";
+ctx.fillRect(700,270,35,50);
+ctx.fillRect(770,270,35,50);
+
+// البوابة
+ctx.fillStyle="#e8b9ff";
+ctx.beginPath();
+ctx.arc(760,350,35,Math.PI,0);
+ctx.fillRect(725,350,70,40);
+ctx.fill();
+
+ctx.fillStyle="#37204e";
+ctx.fillRect(740,350,40,40);
+
+// شخصيات صغيرة
+ctx.font="35px Arial";
+ctx.fillText("🦋",300+Math.sin(frame*.04)*20,180);
+ctx.fillText("✨",500,130+Math.sin(frame*.05)*10);
+
+// البطلة
+drawGirl(player.x,player.y);
 }
-}
-function castle(){
-ctx.fillStyle="#26375b";ctx.fillRect(580,160,250,270);
-ctx.fillStyle="#405a83";ctx.fillRect(600,130,55,300);ctx.fillRect(755,130,55,300);
-ctx.fillStyle="#1b294b";
-for(let x of [600,755]){ctx.fillRect(x,105,55,28);ctx.fillRect(x+10,85,10,22);ctx.fillRect(x+35,85,10,22)}
-ctx.fillStyle="#f5bd58";ctx.beginPath();ctx.arc(700,240,37,Math.PI,0);ctx.fill();ctx.fillRect(663,240,74,190);
-ctx.fillStyle="#17203b";ctx.beginPath();ctx.arc(700,430,37,Math.PI,0);ctx.fill();ctx.fillRect(663,430,74,0);
-text("البوابة",700,310,15,"#fff0ba");
-}
-function ground(){
-ctx.fillStyle="#263e43";ctx.fillRect(0,430,900,70);
-ctx.fillStyle="#63865c";ctx.fillRect(0,430,900,9);
-for(let i=0;i<45;i++){
-let x=(i*83-camera%83+900)%900;
-ctx.fillStyle="#8caa70";ctx.fillRect(x,445+(i%3)*12,25,3);
-}
-}
-function drawAdam(x,y){
-ctx.save();ctx.translate(x,y);ctx.scale(player.dir,1);
-let bob=Math.sin(frame*.17)*3;
-ctx.translate(0,bob);
-ctx.strokeStyle="#24203a";ctx.lineWidth=8;ctx.lineCap="round";
-ctx.beginPath();ctx.moveTo(-8,36);ctx.lineTo(-12,57+Math.abs(Math.sin(frame*.2))*5);ctx.moveTo(8,36);ctx.lineTo(13,57+Math.abs(Math.cos(frame*.2))*5);ctx.stroke();
-rounded(-19,5,38,39,10,"#2675b9");
-ctx.strokeStyle="#e5ad80";ctx.lineWidth=7;
-ctx.beginPath();ctx.moveTo(-17,14);ctx.lineTo(-27,31+Math.sin(frame*.2)*5);ctx.moveTo(17,14);ctx.lineTo(26,28-Math.sin(frame*.2)*5);ctx.stroke();
-ctx.fillStyle="#e9b78d";ctx.beginPath();ctx.arc(0,-10,19,0,Math.PI*2);ctx.fill();
-ctx.fillStyle="#34251e";ctx.beginPath();ctx.arc(0,-18,19,Math.PI,Math.PI*2);ctx.fill();ctx.fillRect(-18,-18,36,8);
-ctx.fillStyle="#202033";ctx.beginPath();ctx.arc(7,-9,2.5,0,7);ctx.fill();
-ctx.strokeStyle="#633d34";ctx.lineWidth=2;ctx.beginPath();ctx.arc(5,-2,5,.2,1.5);ctx.stroke();
-ctx.fillStyle="#f6c34f";ctx.fillRect(-13,8,26,5);
-ctx.restore();
-}
-function drawRobot(x,y){
-ctx.save();ctx.translate(x,y+Math.sin(frame*.08)*8);
-ctx.strokeStyle="#8ce7ff";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,-15);ctx.lineTo(0,-25);ctx.stroke();
-ctx.fillStyle="#ffda70";ctx.beginPath();ctx.arc(0,-28,4,0,7);ctx.fill();
-rounded(-17,-12,34,31,9,"#8abbd4");
-rounded(-12,-7,24,13,5,"#172b49");
-ctx.fillStyle="#7affed";ctx.beginPath();ctx.arc(-5,0,3,0,7);ctx.arc(6,0,3,0,7);ctx.fill();
-ctx.strokeStyle="#8ce7ff";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-15,0);ctx.lineTo(-25,13);ctx.moveTo(15,0);ctx.lineTo(25,13);ctx.stroke();
-ctx.restore();
-}
-function drawLuna(x,y){
-ctx.save();ctx.translate(x,y);
-ctx.fillStyle="#a66bd8";ctx.beginPath();ctx.moveTo(-17,5);ctx.lineTo(17,5);ctx.lineTo(0,42);ctx.fill();
-ctx.fillStyle="#e8b5a1";ctx.beginPath();ctx.arc(0,-9,15,0,7);ctx.fill();
-ctx.fillStyle="#37224f";ctx.beginPath();ctx.moveTo(-16,-10);ctx.lineTo(-6,-37);ctx.lineTo(0,-17);ctx.lineTo(10,-40);ctx.lineTo(16,-8);ctx.fill();
-ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(5,-10,2,0,7);ctx.fill();
-ctx.strokeStyle="#f7d76b";ctx.lineWidth=3;ctx.beginPath();ctx.arc(25,-25,8,0,7);ctx.stroke();
-ctx.restore();
-}
-function drawWorld(){
-background();castle();ground();
-for(let i=0;i<6;i++){
-let x=((i*210-camera*.65)%1000+1000)%1000;
-ctx.fillStyle="#263f39";ctx.fillRect(x,365,14,65);
-ctx.fillStyle="#347b58";ctx.beginPath();ctx.arc(x+7,355,25,0,7);ctx.fill();
-}
-let px=player.x-camera;
-drawAdam(px,player.y);
-drawRobot(220-camera*.2,335);
-drawLuna(320-camera*.2,388);
-text("آدم",px,player.y-52,13);
-text("زيرو",220-camera*.2,300,12,"#a9f5ff");
-text("لونا",320-camera*.2,350,12,"#e8c1ff");
-}
+
 function update(){
-if(!playing||puzzleOpen||solved)return;
+if(playing&&!quizOpen&&!solved){
 frame++;
-if(keys.right) {player.x+=3.5;player.dir=1}
-if(keys.left) {player.x-=3.5;player.dir=-1}
-player.x=Math.max(20,Math.min(850,player.x));
-player.v+=.55;player.y+=player.v;
-if(player.y>370){player.y=370;player.v=0;player.ground=true}
-camera=Math.max(0,Math.min(220,player.x-400));
-if(player.x>735)openPuzzle();
+
+if(keys.right)player.x+=3.5;
+if(keys.left)player.x-=3.5;
+
+player.x=Math.max(25,Math.min(850,player.x));
+
+player.v+=.55;
+player.y+=player.v;
+
+if(player.y>=350){
+player.y=350;
+player.v=0;
+player.ground=true;
 }
-function loop(){ctx.clearRect(0,0,900,500);drawWorld();update();requestAnimationFrame(loop)}
+
+if(player.x>720)openQuiz();
+}
+}
+
+function loop(){
+draw();
+update();
+requestAnimationFrame(loop);
+}
 loop();
 
-function show(id){document.querySelectorAll(".panel").forEach(p=>p.classList.add("hidden"));if(id)document.getElementById(id).classList.remove("hidden")}
-function startGame(){
-show(null);playing=true;player.x=90;player.y=370;player.v=0;
-document.getElementById("hint").textContent="اقترب من البوابة وافتح اللغز!";
+function show(id){
+document.querySelectorAll(".panel").forEach(p=>p.classList.add("hidden"));
+if(id)document.getElementById(id).classList.remove("hidden");
 }
-function openPuzzle(){
-puzzleOpen=true;playing=false;
-let p=puzzles[(level-1)%puzzles.length];
-document.getElementById("puzzleTitle").textContent=p.title;
-document.getElementById("question").textContent=p.q;
+
+function start(){
+score=0;
+level=1;
+lives=3;
+used=[];
+document.getElementById("score").textContent="⭐ 0";
+document.getElementById("level").textContent="المرحلة 1";
+player.x=100;
+player.y=350;
+solved=false;
+quizOpen=false;
+playing=true;
+show(null);
+}
+
+function openQuiz(){
+playing=false;
+quizOpen=true;
+
+let index;
+do{
+index=Math.floor(Math.random()*questions.length);
+}while(used.includes(index)&&used.length<questions.length);
+
+used.push(index);
+let q=questions[index];
+
+if(difficulty==="hard"){
+q={...q,q:q.q+" 🤔"};
+}
+
+document.getElementById("qtitle").textContent="لونا تسألك 💬 - "+q.type;
+document.getElementById("question").textContent=q.q;
 document.getElementById("feedback").textContent="";
-let a=document.getElementById("answers");a.innerHTML="";
-p.a.forEach((answer,i)=>{
-let b=document.createElement("button");b.className="answer";b.textContent=answer;
-b.onclick=()=>checkAnswer(i,p.correct);a.appendChild(b);
+
+let area=document.getElementById("answers");
+area.innerHTML="";
+
+q.a.forEach((answer,i)=>{
+let b=document.createElement("button");
+b.className="answer";
+b.textContent=answer;
+b.onclick=()=>check(i,q.c);
+area.appendChild(b);
 });
-show("puzzle");
+
+show("quiz");
 }
-function checkAnswer(choice,correct){
+
+function check(choice,correct){
 let f=document.getElementById("feedback");
+
 if(choice===correct){
-score+=100;document.getElementById("scoreText").textContent="⭐ "+score;
-f.textContent="إجابة صحيحة! البوابة اتفتحت 🎉";
-setTimeout(()=>{puzzleOpen=false;solved=true;show("win")},850);
+score+=difficulty==="hard"?150:difficulty==="medium"?120:100;
+document.getElementById("score").textContent="⭐ "+score;
+f.textContent="إجابة صحيحة! لونا فخورة بك! 🎉";
+setTimeout(()=>{
+quizOpen=false;
+solved=true;
+show("win");
+},700);
 }else{
 lives--;
-f.textContent=lives>0?"مش دي الإجابة! جرّب تاني ❤️":"انتهت محاولاتك!";
-if(lives<=0)setTimeout(()=>show("lose"),800);
+f.textContent=lives>0?"إجابة غير صحيحة! حاول مرة أخرى ❤️":"خسرت كل المحاولات!";
+if(lives<=0){
+setTimeout(()=>show("lose"),800);
 }
 }
-function nextLevel(){
-level++;lives=3;player.x=90;camera=0;solved=false;puzzleOpen=false;
-document.getElementById("levelText").textContent="المرحلة "+level;
-show(null);playing=true;
 }
+
+function next(){
+level++;
+lives=3;
+player.x=100;
+player.y=350;
+solved=false;
+quizOpen=false;
+used=[];
+document.getElementById("level").textContent="المرحلة "+level;
+show(null);
+playing=true;
+}
+
 function retry(){
-lives=3;player.x=90;camera=0;solved=false;puzzleOpen=false;
-show(null);playing=true;
+lives=3;
+player.x=100;
+player.y=350;
+solved=false;
+quizOpen=false;
+show(null);
+playing=true;
 }
+
 function bind(id,key){
 let el=document.getElementById(id);
-el.addEventListener("pointerdown",e=>{e.preventDefault();keys[key]=true});
-["pointerup","pointerleave","pointercancel"].forEach(ev=>el.addEventListener(ev,()=>keys[key]=false));
+el.addEventListener("pointerdown",e=>{
+e.preventDefault();
+keys[key]=true;
+});
+["pointerup","pointerleave","pointercancel"].forEach(ev=>{
+el.addEventListener(ev,()=>keys[key]=false);
+});
 }
-bind("left","left");bind("right","right");
+bind("left","left");
+bind("right","right");
+
 document.getElementById("jump").addEventListener("pointerdown",e=>{
-e.preventDefault();if(player.ground&&playing){player.v=-12;player.ground=false}
+e.preventDefault();
+if(player.ground&&playing){
+player.v=-12;
+player.ground=false;
+}
 });
+
 window.addEventListener("keydown",e=>{
-if(e.key==="ArrowRight"||e.key==="d")keys.right=true;
-if(e.key==="ArrowLeft"||e.key==="a")keys.left=true;
-if((e.key===" "||e.key==="ArrowUp")&&player.ground&&playing){player.v=-12;player.ground=false}
+if(e.key==="ArrowRight")keys.right=true;
+if(e.key==="ArrowLeft")keys.left=true;
+if(e.key===" "&&player.ground&&playing){
+player.v=-12;
+player.ground=false;
+}
 });
+
 window.addEventListener("keyup",e=>{
-if(e.key==="ArrowRight"||e.key==="d")keys.right=false;
-if(e.key==="ArrowLeft"||e.key==="a")keys.left=false;
+if(e.key==="ArrowRight")keys.right=false;
+if(e.key==="ArrowLeft")keys.left=false;
 });
 </script>
 </body>
